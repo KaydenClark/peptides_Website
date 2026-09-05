@@ -1,0 +1,17 @@
+# Local-only source material
+/mixing info/
+/Mixing and dose info.zip
+/private/
+
+# Credentials and sensitive operational data
+.env
+.env.*
+*.sqlite3
+*.db
+*.log
+
+# Generated application output
+/node_modules/
+/dist/
+/__pycache__/
+.pytest_cache/
