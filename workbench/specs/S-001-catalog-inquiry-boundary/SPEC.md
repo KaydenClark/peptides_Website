@@ -5,13 +5,13 @@
 **Spec ID:** S-001
 **Status:** active
 **Priority:** 1
-**Owner:** project owner
+**Owner:** codex
 **Stance:** Builder
 **Updated:** 2026-09-05
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** Approved Next.js App Router target recorded; no application, public catalog, inquiry endpoint, or deployment exists.
-**Next gate:** Complete a non-public catalog-shell design without product-use or transaction features, then obtain owner review.
+**Latest event:** TK-001 claimed by codex.
+**Next gate:** Close TK-001 with verification and documentation proof.
 
 ## Outcome
 
@@ -229,7 +229,7 @@ Tickets are temporary tracer bullets within this stable capability record.
 
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
-| TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | ready | none | Browser and keyboard demo; source scan confirms no transaction or use-guidance terms. |
+| TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | in-progress | none | Browser and keyboard demo; source scan confirms no transaction or use-guidance terms. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
 
@@ -286,9 +286,20 @@ git check-ignore "mixing info" "Mixing and dose info.zip"
 git status --short --branch
 ```
 
-When a prototype exists, add its exact targeted test, static content scan,
-browser accessibility check, and local start command here before marking
-TK-001 complete.
+Prototype verification commands:
+
+```powershell
+Set-Location site
+npm.cmd test
+npm.cmd run lint
+$env:NEXT_TELEMETRY_DISABLED='1'; npm.cmd run build
+$env:NEXT_TELEMETRY_DISABLED='1'; npm.cmd run dev -- --hostname 127.0.0.1 --port 3000
+```
+
+Browser evidence for the local prototype: at a 390 by 844 viewport, verify the
+visible focus treatment, header navigation, label readability, and the local
+inquiry-list state. Activating the request button must only change local UI
+state and must not submit, persist, or send data.
 
 ## Documentation Impact
 
@@ -310,6 +321,7 @@ TK-001 complete.
 | 2026-09-05 | Architecture | Superseded the planned Django prototype with the owner-approved Next.js App Router target and recorded ADR-0011. | ADR validation, wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | Blueprint and S-001 now specify React, TypeScript, Tailwind CSS, Server Components by default, server-controlled submissions, and Vercel deployability. | No application, deployment, public catalog, legal clearance, or launch approval exists. |
 | 2026-09-05 | Design | Replaced the initial visual palette with the owner-provided five-color palette and accessible role mapping. | Image inspected; wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | S-001 design direction now defines `#76BCAE`, `#7D84B2`, `#F4D06F`, `#FFF5EB`, and `#223759`. | No interface exists yet; final component states still require built-interface contrast checks. |
 | 2026-09-05 | Design | Refined palette roles and visual weighting: cream and navy dominate, teal supports categories, lavender supports secondary surfaces, and yellow is an accent. | Wiki validation, Workbench render, doctor, and `git diff --check` passed. | S-001 now defines approximate 50/25/15/7/3 palette usage and role-specific assignments. | No interface exists yet; final component states still require built-interface contrast checks. |
+| 2026-09-05 | TK-001 | Created a local-only Next.js catalog shell with one neutral placeholder card, a reusable generated vial asset, programmatic label treatment, and an in-browser inquiry-list state. | `npm.cmd test`, `npm.cmd run lint`, and telemetry-disabled `npm.cmd run build` passed. Playwright verified the 390 by 844 layout and the local selected state. | This spec now records prototype commands and local browser evidence. | The five prior exploratory assets remain unreferenced pending explicit deletion approval. The shell has no reviewed catalog entries, submission, persistence, real data, legal clearance, or launch approval. |
 
 ## Completion Result
 
