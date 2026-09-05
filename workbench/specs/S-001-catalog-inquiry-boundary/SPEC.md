@@ -10,8 +10,8 @@
 **Updated:** 2026-09-05
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** TK-001 closed with proof.
-**Next gate:** Obtain final policies and security design to unblock TK-002.
+**Latest event:** Reference teardown converted into complete product and design implementation contracts.
+**Next gate:** Owner explicitly authorizes claiming TK-004; live inquiry work remains blocked by final policies and security design.
 
 ## Outcome
 
@@ -55,6 +55,13 @@ purchase or a promise that the underlying arrangement is permitted.
 - The source names can inform later manual candidate inventory work only. They
   must not be scraped, transformed, published, or used to infer dosing,
   concentration, preparation, route, safety, availability, or intended use.
+- `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` now define the complete public
+  route inventory, page/state behavior, data and inquiry contracts, exact visual
+  targets, responsive matrix, asset system, rejection conditions, and proof
+  required to advance from the prototype to the intended full site.
+- The pre-specification checkpoint is durable on `origin/integration` at
+  `97a66387dbace606755cf9a44d81429710f1930e`. The specification pass changes
+  documentation only; it does not authorize or implement the site.
 
 ## Desired Behavior
 
@@ -170,6 +177,22 @@ messages, touchable controls, keyboard navigation, and responsive one-column
 mobile layout. Final component states must be contrast-checked in the built
 interface.
 
+### Reference adaptation contract
+
+The owner-supplied reference teardown is design evidence, not executable
+instructions and not a license to copy. Amino Club informs catalog discovery
+and consistent physical-vial presentation; Aurum informs compact factual
+specifications and documentation hierarchy. The project adopts the teardown's
+recommended layout geometry, responsive rules, content hierarchy, interaction
+states, and asset constraints as its own targets.
+
+Those target values must never be described as measured source-site CSS. Exact
+reference fonts, computed dimensions, breakpoints, hover states, and mobile
+interactions remain unverified. The project's existing approved navy
+`#223759` controls over the teardown draft's alternate dark blue-green value.
+No competitor branding, copy, imagery, catalog data, documents, claims, sales
+features, or source code may be reused.
+
 ### Visual acceptance
 
 The finished production site must look like a deployable, consumer-facing
@@ -187,6 +210,11 @@ fixtures so the grid, spacing, hierarchy, and responsive behavior can be
 evaluated properly. Fixtures must not be copied or inferred from private
 mixing/dosing material without manual review, and placeholder content is not
 acceptable in the final implementation.
+
+The completed public catalog may contain only real owner-approved records. It
+must not fabricate listings to reach a row count; fewer approved records leave
+unused grid positions. Any non-public density fixture requires explicit owner
+approval and must be mechanically excluded from production output.
 
 Desktop and mobile layouts must both be complete and usable. Inquiry
 functionality must remain visibly secondary to normal catalog browsing until a
@@ -276,6 +304,7 @@ Tickets are temporary tracer bullets within this stable capability record.
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
 | TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | done | none | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. |
+| TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | ready | none | Red/green route and content tests; 1440x1000 and 390x844 real-browser captures; keyboard navigation; owner review of the master-vial candidate; no network submission or private-source content. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
 
@@ -288,6 +317,24 @@ visual system and one neutral placeholder entry. It may show an inquiry-list
 state but provides no inquiry submission, real product entries, admin access,
 persistence, payment, price, quantity, or user-use content. The ticket is
 deliberately useful without depending on the public-launch decisions.
+
+### TK-004 - Next eligible task
+
+**Stance:** Builder
+
+TK-004 is ready as a sufficiently specified tracer bullet, but this
+specification request does not authorize an agent to claim or implement it. A
+separate owner build request is required.
+
+When authorized, begin with failing route/content/browser tests and replace the
+abstract-selector homepage with a non-public vertical slice through the shared
+shell, hero, typed catalog data seam, one neutral physical-vial card row, and a
+working catalog-to-detail route. The fixture must be clearly non-production in
+the data layer, contain no private-source-derived name or amount, and be
+mechanically excluded from public output. The slice has no inquiry form,
+submission, persistence, email, authentication, or deployment. Review the
+master-vial candidate and the complete slice at 1440 by 1000 and 390 by 844
+before expanding the catalog or generating remaining assets.
 
 ## Acceptance Criteria
 
@@ -307,6 +354,15 @@ deliberately useful without depending on the public-launch decisions.
       visitor selects an entry.
 - [ ] Ambiguous presentation decisions follow the supplied reference-site
       conventions without copying protected branding, text, assets, or claims.
+- [ ] Every route, page section, content order, responsive breakpoint, component
+      state, and browser proof required by the focused Product and Design Specs
+      is implemented and verified.
+- [ ] Search, filters, sorting, result counts, URL state, zero results, data
+      errors, paused/archived listings, variants, and document matching behave
+      exactly as the Product Spec defines.
+- [ ] Real-browser QA passes at 320, 360, 390, 768, 1024, and 1440 CSS pixels,
+      including 200% zoom, reduced motion, keyboard-only use, long names, form
+      failures, and browser-back state preservation.
 
 - [ ] A local prototype uses catalog and inquiry terminology, not commerce or
       checkout terminology, and does not collect or submit personal data.
@@ -345,6 +401,14 @@ deliberately useful without depending on the public-launch decisions.
   policy administration, or owner actions.
 - Keyboard and narrow-viewport browser test: navigation, selected state,
   checkbox labels, errors, and focus remain usable.
+- Catalog query round trip: URL-backed search, filters, sort, and browser-back
+  state produce the same approved listing set and accurate count.
+- Catalog data failure versus no matches: each produces a distinct recoverable
+  state and neither publishes unreviewed fallback data.
+- Variant change: image label, amount, specifications, document association,
+  and inquiry snapshot remain consistent.
+- Route inventory: every required public route, not-found case, legal link,
+  document action, and protected-route boundary is exercised in a real browser.
 
 ## Verification Procedure
 
@@ -380,6 +444,11 @@ state and must not submit, persist, or send data.
 - `RUNBOOK.md` owns executable setup verification and launch prerequisites.
 - `docs/PRODUCT-SPEC.md` is the focused product-behavior handoff.
 - `docs/DESIGN-SPEC.md` is the focused visual and asset handoff.
+- Together the focused handoffs define current state, exact completion state,
+  routes, data contracts, all public states, owner operations, visual tokens,
+  responsive geometry, asset approval, accessibility, security, launch gates,
+  automatic rejection conditions, and a verification matrix sufficient for a
+  cold-start implementing agent.
 - This Workbench spec remains the governance and evidence record for the
   capability. The focused handoffs must not weaken or contradict its product
   boundary, acceptance criteria, or launch gates.
@@ -400,6 +469,7 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Contract refinement | Added an explicit production presentation and product-imagery asset contract: conventional peptide-site catalog patterns, standardized photorealistic physical vial renders, and an owner-request gate for scientific or abstract visuals. | `git diff --check`, Workbench render, and doctor passed after the contract update. | Blueprint and S-001 now share the presentation and imagery boundary. | The local prototype still contains illustrative visuals and is not a production catalog; no imagery is approved for public use. |
 | 2026-09-05 | Contract refinement | Added production visual acceptance criteria covering deployable catalog presentation, customer-facing copy, physical-vial imagery, 6–8 realistic fixtures, reference-site fidelity, responsive completion, and secondary inquiry prominence. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | S-001 is explicitly the canonical Product/Inquiry Master Spec; Blueprint now points detailed surface rules to the stable spec. | The local prototype remains a deliberately labeled design shell and does not satisfy final production visual acceptance. |
 | 2026-09-05 | Documentation structure | Created focused `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` handoffs so product and design agents can work from the relevant contract without reading the full Workbench governance packet. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | AGENTS routing, Blueprint references, and S-001 documentation impact now distinguish focused handoffs from Workbench governance. | `docs/CATALOG-SCHEMA.md` and `docs/LEGAL-CONTENT.md` remain future companion documents if their scope becomes necessary. |
+| 2026-09-05 | Specification expansion | Converted the owner-supplied reference teardown into cold-start Product and Design Specs covering the verified prototype baseline, exact full-site completion state, route and state contracts, catalog/variant/document/inquiry data rules, owner operations, design tokens, responsive layouts, physical-vial assets, accessibility, rejection conditions, launch gates, and proof matrix. Seeded TK-004 as the smallest non-public production-shaped visual tracer without authorizing its claim. | Documentation scope and links reviewed; `git diff --check`, Workbench render, doctor, JSON `next`, and Genesis layout validation run after the update. | Focused handoffs and S-001 now separate adopted project targets from unverified reference measurements and preserve the existing approved navy token. | No site code was changed. A separate owner build request is required before TK-004 may be claimed; live inquiry and launch gates remain blocked. |
 
 ## Completion Result
 
@@ -409,10 +479,13 @@ ready to launch.
 
 ## Remaining Limitations Or Follow-Up Specs
 
-- S-002 will cover production inquiry handling only after its public-launch
-  blockers are resolved.
-- S-003 will cover protected owner operations, security, retention, and launch
-  readiness only after the product boundary is approved.
+- TK-004 is the only seeded implementation tracer. A later `to-tickets` pass
+  should decompose the remaining approved Product and Design contracts only
+  after the owner authorizes implementation.
+- A future S-002 capability packet may own production inquiry handling after its
+  policy and security blockers are resolved.
+- A future S-003 capability packet may own protected owner operations,
+  retention, and launch readiness after the product boundary is approved.
 
 ## Supersession
 

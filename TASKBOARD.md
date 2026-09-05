@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-002: Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. (blocked) | codex | Final policies and security design | TK-001 closed with proof. | Obtain final policies and security design to unblock TK-002. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-004: Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. (ready) | codex | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | Reference teardown converted into complete product and design implementation contracts. | Owner explicitly authorizes claiming TK-004; live inquiry work remains blocked by final policies and security design. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions
