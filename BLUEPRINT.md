@@ -12,13 +12,19 @@ This project will provide a restrained, owner-managed research-material catalog
 for adults who may request a private follow-up about a possible logistics or
 shipping-cost-sharing arrangement. It is a catalog-and-inquiry website, not a
 store: it stops after preserving a nonbinding inquiry and notifying the owner.
-The initial project state is a requirements and operating-controls bootstrap;
-no product site, public catalog, inquiry endpoint, or deployment exists.
+The project includes a local-only catalog-shell prototype for design validation;
+no public catalog, inquiry endpoint, or deployment exists.
 
 Core promise:
 
 > Browse reviewed catalog entries and request a conversation without placing an
 > order, reserving material, or making a payment through the website.
+
+Detailed product behavior is owned by [docs/PRODUCT-SPEC.md](docs/PRODUCT-SPEC.md)
+and detailed visual and asset rules are owned by
+[docs/DESIGN-SPEC.md](docs/DESIGN-SPEC.md). The Workbench spec records
+governance and evidence; none of those documents replace this Blueprint's
+high-level product direction.
 
 The founding prompt is preserved verbatim in
 `workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md`.
@@ -37,7 +43,7 @@ The founding prompt is preserved verbatim in
 
 | Layer / concern | Choice | Invariant / source |
 |---|---|---|
-| Bootstrap runtime | Node.js 18+ | Runs installed Workbench verification; no product runtime exists yet. |
+| Bootstrap runtime | Node.js 18+ | Runs Workbench verification and the local-only prototype in `site/`; no public runtime exists. |
 | Intended product surface | Next.js App Router with React, TypeScript, and Tailwind CSS | Server Components are the default; Client Components are limited to required browser interactivity. |
 | Intended storage | PostgreSQL | Store policy versions, acknowledgments, inquiry state, and notification jobs atomically. |
 | Submission boundary | Server Actions or route handlers | Browser code cannot be the authority for inquiry persistence, acknowledgments, authorization, or notification processing. |

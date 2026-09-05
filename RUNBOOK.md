@@ -15,11 +15,11 @@ them as public catalog data.
 ## Prerequisites
 
 - Node.js 18 or later for Workbench checks.
-- Git for local recovery. No remote is configured or required for this planning
-  bootstrap; creating or pushing one needs owner authorization.
+- Git for local recovery. The configured `origin` remote is not an authorization
+  to push or publish; either action still needs owner authorization.
 
-No accounts, secrets, environment variables, application database, or product
-runtime are configured yet.
+No accounts, secrets, environment variables, or application database are
+configured. The only product runtime is the local-only prototype in `site/`.
 
 ## Verify the planning bootstrap
 
@@ -59,8 +59,8 @@ node workbench/tools/spec-workbench.mjs doctor
 
 For behavior changes, add a failing test first, run it to confirm failure,
 implement the smallest correction, then run focused tests and the verification
-commands above. The initial project has no application test suite because no
-application has been scaffolded.
+commands above. The local prototype's focused content guard runs with
+`Set-Location site; npm.cmd test`.
 
 ## Data and recovery
 

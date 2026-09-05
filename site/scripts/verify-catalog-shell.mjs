@@ -5,6 +5,8 @@ const page = readFileSync(resolve("src/app/page.tsx"), "utf8");
 const requiredCopy = [
   "Research Catalog",
   "Illustrative candidate",
+  "Five illustrative visuals",
+  "candidate-visual-05.png",
   "Identity review pending",
   "Local prototype — no submissions",
 ];

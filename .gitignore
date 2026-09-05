@@ -17,6 +17,5 @@
 .pytest_cache/
 /.playwright-cli/
 
-# Superseded exploratory visuals retained locally until the owner approves deletion
+# Non-catalog design concept retained locally
 /docs/design-concepts/catalog-mobile-concept.png
-/site/public/images/research-materials/candidate-visual-*.png

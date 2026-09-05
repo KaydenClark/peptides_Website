@@ -1,8 +1,8 @@
 # Research Catalog Prototype
 
-Local-only Next.js prototype for the catalog visual system. It contains one
-neutral placeholder and an in-browser inquiry-list state only. It does not
-collect, persist, submit, or transmit data.
+Local-only Next.js prototype for the catalog visual system. It contains five
+generic illustrative visuals, one neutral placeholder, and an in-browser
+inquiry-list state only. It does not collect, persist, submit, or transmit data.
 
 ## Run locally
 

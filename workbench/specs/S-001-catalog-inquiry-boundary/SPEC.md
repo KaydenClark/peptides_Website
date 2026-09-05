@@ -10,8 +10,8 @@
 **Updated:** 2026-09-05
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** TK-001 claimed by codex.
-**Next gate:** Close TK-001 with verification and documentation proof.
+**Latest event:** TK-001 closed with proof.
+**Next gate:** Obtain final policies and security design to unblock TK-002.
 
 ## Outcome
 
@@ -47,9 +47,11 @@ purchase or a promise that the underlying arrangement is permitted.
   and an archive. They are ignored by Git and are not product content.
 - The repository has a local `integration` branch, the seven Workbench root
   controls, schema-2 support root, installed runtime tools, and this first spec.
-- No application source, public catalog entries, inquiry form, administrator
-  account, policy text, database, payments, notifications, deployment, legal
-  review, jurisdiction policy, or hosting approval exists.
+- A local-only Next.js catalog shell demonstrates five generic illustrative
+  visuals, one neutral placeholder entry, and an in-browser inquiry-list
+  state. No public catalog entries, inquiry
+  form, administrator account, policy text, database, payments, notifications,
+  deployment, legal review, jurisdiction policy, or hosting approval exists.
 - The source names can inform later manual candidate inventory work only. They
   must not be scraped, transformed, published, or used to infer dosing,
   concentration, preparation, route, safety, availability, or intended use.
@@ -78,6 +80,22 @@ identity, neutral description, owner-controlled status, documentation metadata,
 last-reviewed date, and a `request contact about this item` action. A status may
 be `open for inquiries`, `paused`, or `archived` and must not communicate stock,
 safety, approval, qualification, or a guaranteed outcome.
+
+### Product imagery asset contract
+
+When an entry is presented with product imagery, it must use a photorealistic,
+ecommerce-style render of a physical glass research vial. All entry renders use
+one master design with the same camera angle, bottle dimensions, cap style,
+lighting, background, label layout, and brand treatment; only reviewed entry
+details such as compound name and vial strength may vary.
+An owner request for images of peptide products means vial-product imagery by
+default; the words peptide and research must not be interpreted as a request
+for scientific artwork.
+
+Molecules, DNA strands, protein ribbons, abstract scientific illustrations, and
+generic biotechnology artwork are not valid default product-card imagery.
+Those visuals require an explicit owner request for a named non-product use and
+must not be generated or substituted for a vial render by default.
 
 Entry creation requires a human content review. The review must reject dosing,
 mixing, preparation, administration, treatment, medical, veterinary,
@@ -152,12 +170,40 @@ messages, touchable controls, keyboard navigation, and responsive one-column
 mobile layout. Final component states must be contrast-checked in the built
 interface.
 
+### Visual acceptance
+
+The finished production site must look like a deployable, consumer-facing
+catalog, not a prototype, wireframe, internal tool, or demo. Customer-facing UI
+must not display `prototype`, `placeholder`, `illustrative`, `demo`, or other
+development/debug language.
+
+Product cards must use photorealistic physical-vial photography or renders. No
+abstract molecule artwork, DNA strands, protein ribbons, or generic
+biotechnology artwork may represent an individual catalog entry. Product
+density and page hierarchy should resemble the owner-supplied reference sites.
+
+During development, populate at least 6–8 realistic, owner-approved catalog
+fixtures so the grid, spacing, hierarchy, and responsive behavior can be
+evaluated properly. Fixtures must not be copied or inferred from private
+mixing/dosing material without manual review, and placeholder content is not
+acceptable in the final implementation.
+
+Desktop and mobile layouts must both be complete and usable. Inquiry
+functionality must remain visibly secondary to normal catalog browsing until a
+visitor selects a catalog entry.
+
+When visual presentation is ambiguous, prefer the conventions used by the
+owner-supplied reference sites over inventing an unrelated visual direction.
+This governs layout, hierarchy, density, card treatment, and CTA prominence; it
+does not authorize copying protected branding, text, assets, or unverified
+claims.
+
 ## Decisions And Contracts
 
 - The planned stack is Next.js App Router, React, TypeScript, Tailwind CSS,
   PostgreSQL, Server Components by default, and a transactional email provider.
-  Client Components are limited to required browser interactivity. No product
-  code is approved or scaffolded in this ticket.
+  Client Components are limited to required browser interactivity. TK-001 is
+  limited to a local-only visual prototype and creates no live product workflow.
 - All submissions use Server Actions or route handlers. Browser code cannot be
   the authority for inquiry persistence, acknowledgments, authorization, or
   notification processing.
@@ -229,7 +275,7 @@ Tickets are temporary tracer bullets within this stable capability record.
 
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
-| TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | in-progress | none | Browser and keyboard demo; source scan confirms no transaction or use-guidance terms. |
+| TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | done | none | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
 
@@ -245,11 +291,35 @@ deliberately useful without depending on the public-launch decisions.
 
 ## Acceptance Criteria
 
+### Production visual acceptance
+
+- [ ] The finished site presents as a deployable consumer-facing catalog, not a
+      prototype, wireframe, internal tool, or demo.
+- [ ] Customer-facing UI contains no `prototype`, `placeholder`,
+      `illustrative`, `demo`, or development/debug language.
+- [ ] Product cards use photorealistic physical-vial photography or renders;
+      abstract scientific artwork does not represent individual entries.
+- [ ] The catalog contains at least 6–8 realistic, owner-approved entries for
+      evaluating product density and page hierarchy during development.
+- [ ] Desktop and mobile layouts are complete, and placeholder content is absent
+      from the final implementation.
+- [ ] Inquiry functionality is visibly secondary to catalog browsing until a
+      visitor selects an entry.
+- [ ] Ambiguous presentation decisions follow the supplied reference-site
+      conventions without copying protected branding, text, assets, or claims.
+
 - [ ] A local prototype uses catalog and inquiry terminology, not commerce or
       checkout terminology, and does not collect or submit personal data.
 - [ ] The prototype contains no product-use guidance, health claim, unreviewed
       catalog entry, pricing, quantity, payment, shipping calculation, or
       reservation function.
+- [ ] Production catalog product-card imagery follows the asset contract:
+      photorealistic physical vial renders use one consistent master design;
+      scientific or abstract visuals are never substituted by default and
+      require an explicit owner request for a named non-product use.
+- [ ] Any temporary artwork in the local prototype is clearly labeled as
+      illustrative non-product content and is not presented as an approved
+      catalog image or production asset.
 - [ ] Future inquiry implementation has a server-enforced required-
       acknowledgment contract and stores exact accepted policy versions.
 - [ ] A future owner queue preserves requests during notification failure and
@@ -308,8 +378,11 @@ state and must not submit, persist, or send data.
 - `LEXICON.md` owns catalog, inquiry, policy-version, and private-reference
   terminology.
 - `RUNBOOK.md` owns executable setup verification and launch prerequisites.
-- No standalone requirements document is created; this spec is the source of
-  product requirements and evidence.
+- `docs/PRODUCT-SPEC.md` is the focused product-behavior handoff.
+- `docs/DESIGN-SPEC.md` is the focused visual and asset handoff.
+- This Workbench spec remains the governance and evidence record for the
+  capability. The focused handoffs must not weaken or contradict its product
+  boundary, acceptance criteria, or launch gates.
 
 ## Append-Only Evidence And Execution Log
 
@@ -322,6 +395,11 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Design | Replaced the initial visual palette with the owner-provided five-color palette and accessible role mapping. | Image inspected; wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | S-001 design direction now defines `#76BCAE`, `#7D84B2`, `#F4D06F`, `#FFF5EB`, and `#223759`. | No interface exists yet; final component states still require built-interface contrast checks. |
 | 2026-09-05 | Design | Refined palette roles and visual weighting: cream and navy dominate, teal supports categories, lavender supports secondary surfaces, and yellow is an accent. | Wiki validation, Workbench render, doctor, and `git diff --check` passed. | S-001 now defines approximate 50/25/15/7/3 palette usage and role-specific assignments. | No interface exists yet; final component states still require built-interface contrast checks. |
 | 2026-09-05 | TK-001 | Created a local-only Next.js catalog shell with one neutral placeholder card, a reusable generated vial asset, programmatic label treatment, and an in-browser inquiry-list state. | `npm.cmd test`, `npm.cmd run lint`, and telemetry-disabled `npm.cmd run build` passed. Playwright verified the 390 by 844 layout and the local selected state. | This spec now records prototype commands and local browser evidence. | The five prior exploratory assets remain unreferenced pending explicit deletion approval. The shell has no reviewed catalog entries, submission, persistence, real data, legal clearance, or launch approval. |
+| 2026-09-05 | TK-001 | Ticket closed | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. | S-001 evidence records the local-only catalog-shell proof and retained launch blockers. | TK-002 and TK-003 remain blocked pending final policies, security design, legal review, host approval, and owner approval. |
+| 2026-09-05 | TK-001 refinement | At the owner's request, connected five existing generic visuals to a local selector and selected-detail state. The visuals remain illustrative only, with no product names, catalog approval, claims, submission, persistence, or transmission. | Content guard, lint, production build, 1440px browser selection of visual 05, and 390x844 browser selection plus local inquiry-list state passed. | Current verified state now records the five-visual local demonstration. | All public catalog and launch blockers remain; these are not product entries. |
+| 2026-09-05 | Contract refinement | Added an explicit production presentation and product-imagery asset contract: conventional peptide-site catalog patterns, standardized photorealistic physical vial renders, and an owner-request gate for scientific or abstract visuals. | `git diff --check`, Workbench render, and doctor passed after the contract update. | Blueprint and S-001 now share the presentation and imagery boundary. | The local prototype still contains illustrative visuals and is not a production catalog; no imagery is approved for public use. |
+| 2026-09-05 | Contract refinement | Added production visual acceptance criteria covering deployable catalog presentation, customer-facing copy, physical-vial imagery, 6–8 realistic fixtures, reference-site fidelity, responsive completion, and secondary inquiry prominence. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | S-001 is explicitly the canonical Product/Inquiry Master Spec; Blueprint now points detailed surface rules to the stable spec. | The local prototype remains a deliberately labeled design shell and does not satisfy final production visual acceptance. |
+| 2026-09-05 | Documentation structure | Created focused `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` handoffs so product and design agents can work from the relevant contract without reading the full Workbench governance packet. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | AGENTS routing, Blueprint references, and S-001 documentation impact now distinguish focused handoffs from Workbench governance. | `docs/CATALOG-SCHEMA.md` and `docs/LEGAL-CONTENT.md` remain future companion documents if their scope becomes necessary. |
 
 ## Completion Result
 

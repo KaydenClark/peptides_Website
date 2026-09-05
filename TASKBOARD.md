@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-001: Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. (in-progress) | codex | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | TK-001 claimed by codex. | Close TK-001 with verification and documentation proof. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-002: Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. (blocked) | codex | Final policies and security design | TK-001 closed with proof. | Obtain final policies and security design to unblock TK-002. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions

@@ -29,9 +29,16 @@ h1 { max-width: 12ch; margin-bottom: 18px; font-size: clamp(2.65rem, 11vw, 5.2re
 .intro { max-width: 42rem; margin-bottom: 0; font-size: clamp(1.08rem, 4.8vw, 1.32rem); line-height: 1.55; }
 .catalog-section { padding-bottom: 42px; }
 .catalog-section > h2, .section-heading h2 { margin-bottom: 18px; font-size: clamp(1.65rem, 7vw, 2.35rem); font-weight: 500; letter-spacing: -0.04em; }
+.visual-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 18px; }
+.visual-selector { position: relative; min-height: 132px; overflow: hidden; border: 2px solid transparent; border-radius: 16px; background: var(--navy); color: var(--cream); cursor: pointer; font: inherit; font-size: 0.8rem; font-weight: 800; text-align: left; transition: border-color 160ms ease, transform 160ms ease; }
+.visual-selector img { object-fit: cover; opacity: 0.78; transition: opacity 160ms ease, transform 160ms ease; }
+.visual-selector span { position: absolute; right: 9px; bottom: 8px; left: 9px; z-index: 1; text-shadow: 0 1px 5px rgba(0, 0, 0, 0.72); }
+.visual-selector:hover img, .visual-selector.is-selected img { opacity: 1; transform: scale(1.035); }
+.visual-selector.is-selected { border-color: var(--yellow); }
 .candidate-card { overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: #fffaf5; box-shadow: var(--shadow); }
 .candidate-image { position: relative; aspect-ratio: 1 / 0.9; overflow: hidden; background: var(--cream); }
 .candidate-image img { object-fit: cover; }
+.selected-visual-image { aspect-ratio: 4 / 3; background: var(--navy); }
 .vial-image { display: grid; place-items: center; background: linear-gradient(145deg, #fffaf5 0%, #eee8f4 100%); }
 .vial-stage { position: relative; width: min(90%, 320px); aspect-ratio: 2 / 3; }
 .vial-stage > img { object-fit: contain; }
@@ -64,6 +71,8 @@ footer p { margin-bottom: 0; font-size: 0.92rem; }
   .topbar { padding-right: max(32px, calc((100vw - 920px) / 2)); padding-left: max(32px, calc((100vw - 920px) / 2)); }
   .hero { padding-top: 92px; }
   .catalog-section, .system-section { padding-right: 32px; padding-left: 32px; }
+  .visual-gallery { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .visual-selector { min-height: 148px; }
   .candidate-content { padding: 30px; }
 }
 

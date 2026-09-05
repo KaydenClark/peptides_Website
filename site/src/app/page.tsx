@@ -3,28 +3,43 @@
 import Image from "next/image";
 import { useState } from "react";
 
-function CanonicalVial() {
-  return (
-    <div className="vial-stage" aria-label="Illustrative research vial with a programmatic label">
-      <Image
-        src="/images/research-materials/canonical-vial.png"
-        alt="Unlabeled clear glass research vial with aluminum cap"
-        fill
-        priority
-        sizes="(max-width: 720px) 240px, 300px"
-      />
-      <div className="vial-label" aria-hidden="true">
-        <span className="label-brand">Research Catalog</span>
-        <strong>Illustrative candidate</strong>
-        <span>Strength: pending review</span>
-        <span className="label-rule">Research Use Only</span>
-      </div>
-    </div>
-  );
-}
+const visualExamples = [
+  {
+    id: "visual-01",
+    title: "Illustrative visual 01",
+    src: "/images/research-materials/candidate-visual-01.png",
+    alt: "Abstract ribbon-like research visual in navy, teal, and yellow",
+  },
+  {
+    id: "visual-02",
+    title: "Illustrative visual 02",
+    src: "/images/research-materials/candidate-visual-02.png",
+    alt: "Abstract translucent research visual in lavender, teal, and navy",
+  },
+  {
+    id: "visual-03",
+    title: "Illustrative visual 03",
+    src: "/images/research-materials/candidate-visual-03.png",
+    alt: "Abstract bead-chain research visual on a navy background",
+  },
+  {
+    id: "visual-04",
+    title: "Illustrative visual 04",
+    src: "/images/research-materials/candidate-visual-04.png",
+    alt: "Abstract glass helix research visual above a laboratory dish",
+  },
+  {
+    id: "visual-05",
+    title: "Illustrative visual 05",
+    src: "/images/research-materials/candidate-visual-05.png",
+    alt: "Abstract radial research visual in teal, lavender, and yellow",
+  },
+];
 
 export default function Home() {
   const [isListed, setIsListed] = useState(false);
+  const [selectedVisualId, setSelectedVisualId] = useState(visualExamples[0].id);
+  const selectedVisual = visualExamples.find((visual) => visual.id === selectedVisualId) ?? visualExamples[0];
 
   return (
     <main className="page-shell">
@@ -40,7 +55,7 @@ export default function Home() {
         <p className="prototype-note">Local prototype</p>
         <h1 id="page-title">A calmer way to begin a research conversation.</h1>
         <p className="intro">
-          Explore the catalog visual system and a single placeholder entry. This
+          Explore five illustrative visuals and a single placeholder entry. This
           screen stores nothing and does not send requests.
         </p>
       </section>
@@ -50,11 +65,27 @@ export default function Home() {
           <h2 id="catalog-title">Catalog preview</h2>
           <p>Card structure is intentionally familiar, while the interaction remains an inquiry only.</p>
         </div>
+        <div className="visual-gallery" aria-label="Five illustrative visuals">
+          {visualExamples.map((visual) => (
+            <button
+              className={`visual-selector${visual.id === selectedVisual.id ? " is-selected" : ""}`}
+              type="button"
+              key={visual.id}
+              aria-pressed={visual.id === selectedVisual.id}
+              onClick={() => setSelectedVisualId(visual.id)}
+            >
+              <Image src={visual.src} alt="" fill sizes="(max-width: 720px) 44vw, 140px" />
+              <span>{visual.title}</span>
+            </button>
+          ))}
+        </div>
         <article className="candidate-card">
-          <div className="candidate-image vial-image"><CanonicalVial /></div>
+          <div className="candidate-image selected-visual-image">
+            <Image src={selectedVisual.src} alt={selectedVisual.alt} fill priority sizes="(max-width: 720px) 100vw, 720px" />
+          </div>
           <div className="candidate-content">
             <p className="item-label">Illustrative candidate</p>
-            <p className="item-status">Identity review pending · Strength review pending</p>
+            <p className="item-status">{selectedVisual.title} · Identity review pending · Strength review pending</p>
             <button
               className="primary-action"
               type="button"
@@ -76,13 +107,13 @@ export default function Home() {
       </section>
 
       <section className="system-section" aria-labelledby="system-title">
-        <h2 id="system-title">One consistent vial system</h2>
+        <h2 id="system-title">Five visual concepts</h2>
         <p>
-          The same canonical vial image, camera angle, lighting, scale, and label
-          placement will be used for every reviewed catalog entry.
+          These five visuals are a local design exercise, not reviewed catalog
+          entries. Selecting one changes this prototype only.
         </p>
         <div className="label-key" aria-label="Label system details">
-          <span>Compound name</span><span>Strength</span><span>Brand</span><span>Research Use Only</span>
+          <span>Local selection</span><span>Identity pending review</span><span>No submissions</span>
         </div>
       </section>
 
