@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-001: Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. (ready) | project owner | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | Approved Next.js App Router target recorded; no application, public catalog, inquiry endpoint, or deployment exists. | Complete a non-public catalog-shell design without product-use or transaction features, then obtain owner review. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-001: Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. (in-progress) | codex | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | TK-001 claimed by codex. | Close TK-001 with verification and documentation proof. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions
