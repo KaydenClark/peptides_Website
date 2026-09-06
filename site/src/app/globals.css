@@ -44,13 +44,8 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .wordmark { margin-right: auto; overflow: hidden; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.04em; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
 .desktop-nav { display: none; gap: 28px; }
 .desktop-nav a, .menu-dialog nav a { font-size: 1rem; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-.header-catalog-link, .button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; background: var(--navy); color: var(--cream); font-weight: 800; text-decoration: none; white-space: nowrap; }
-/* Below 640px the header only has room for the wordmark and the menu button; the mobile menu already repeats "Browse catalog". */
-.header-catalog-link { display: none; flex: none; }
+.button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; background: var(--navy); color: var(--cream); font-weight: 800; text-decoration: none; white-space: nowrap; }
 .menu-button { flex: none; }
-@media (min-width: 640px) {
-  .header-catalog-link { display: inline-flex; }
-}
 .menu-button, .menu-close { min-height: 44px; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: 800; }
 .menu-overlay { position: fixed; z-index: 20; inset: 0; display: flex; justify-content: flex-end; background: rgba(34, 55, 89, 0.48); }
 .menu-dialog { width: min(100%, 360px); min-height: 100%; padding: 24px; background: var(--surface); box-shadow: -12px 0 32px rgba(34, 55, 89, 0.18); }
@@ -81,7 +76,7 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .catalog-card__accent { height: 3px; background: var(--accent, var(--teal)); }
 .catalog-card__image { position: relative; aspect-ratio: 1; background: var(--navy); }
 .catalog-card__content { display: flex; flex: 1; flex-direction: column; padding: 16px 16px 20px; }
-.catalog-card__title { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 12px; font-size: 1.5rem; line-height: 1.25; }
+.catalog-card__title { display: flex; align-items: flex-start; gap: 9px; margin-top: 0; margin-bottom: 12px; font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -0.04em; font-size: 1.5rem; line-height: 1.25; }
 .catalog-card__title .swatch { margin-top: 0.42em; }
 .catalog-card__link { text-decoration: none; }
 /* Stretch the single card link over the whole card so any click opens the record. */

@@ -36,7 +36,7 @@ export default function Home() {
         </div>
         <div className="catalog-grid">
           {catalogRecords.slice(0, 6).map((record) => (
-            <CatalogCard item={record} key={record.id} />
+            <CatalogCard headingLevel={3} item={record} key={record.id} />
           ))}
         </div>
         <Link className="text-link catalog-preview__link" href="/catalog">
