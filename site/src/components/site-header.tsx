@@ -79,9 +79,6 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <Link className="header-catalog-link" href="/catalog">
-            Browse catalog
-          </Link>
           <button
             aria-controls="mobile-navigation"
             aria-expanded={isOpen}
@@ -120,9 +117,6 @@ export function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/catalog" onClick={closeMenu}>
-                Browse catalog
-              </Link>
             </nav>
           </aside>
         </div>

@@ -3,8 +3,15 @@ import Link from "next/link";
 
 import type { CatalogRecord } from "@/data/catalog";
 
-export function CatalogCard({ item }: { item: CatalogRecord }) {
+export function CatalogCard({
+  item,
+  headingLevel = 2,
+}: {
+  item: CatalogRecord;
+  headingLevel?: 2 | 3;
+}) {
   const detailPath = `/catalog/${item.slug}`;
+  const Heading = headingLevel === 3 ? "h3" : "h2";
 
   return (
     <article className="catalog-card" style={{ "--accent": item.accent } as React.CSSProperties}>
@@ -13,10 +20,10 @@ export function CatalogCard({ item }: { item: CatalogRecord }) {
       </div>
       <div aria-hidden="true" className="catalog-card__accent" />
       <div className="catalog-card__content">
-        <h2 className="catalog-card__title">
+        <Heading className="catalog-card__title">
           <span aria-hidden="true" className="swatch" />
           <Link className="catalog-card__link" href={detailPath}>{item.displayName}</Link>
-        </h2>
+        </Heading>
         <p className="catalog-card__status">Status: not open for inquiries</p>
         <span aria-hidden="true" className="catalog-card__cta">
           <span className="catalog-card__cta-label">View details</span>
