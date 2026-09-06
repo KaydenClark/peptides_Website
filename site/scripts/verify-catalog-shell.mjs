@@ -64,9 +64,10 @@ const requiredCopy = [
   "Research information",
   "Inquiry is not available for this record.",
 ];
+// Compared against a lowercased source, so every term must be lowercase.
 const prohibitedTerms = [
-  ">Buy<",
-  ">Add<",
+  ">buy<",
+  ">add<",
   "checkout",
   "pricing",
   "dosing",

@@ -37,7 +37,9 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
             <div><dt>Product name</dt><dd>{record.displayName}</dd></div>
             <div><dt>Vial sizes</dt><dd>{record.catalogStrengths.join(", ")}</dd></div>
             <div><dt>Inventory status</dt><dd>Paused &mdash; not currently open for inquiries</dd></div>
-            <div><dt>Price</dt><dd>{record.price ?? "Not listed"}</dd></div>
+            {record.price ? (
+              <div><dt>Price</dt><dd>{record.price}</dd></div>
+            ) : null}
           </dl>
           <section className="research-notice" aria-labelledby="research-info-title">
             <h2 id="research-info-title">Research information</h2>
