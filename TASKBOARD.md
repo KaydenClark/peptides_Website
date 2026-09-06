@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-009: Correct keyboard, focus, and anchor-offset defects from the front-end review. (ready) | claude | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | TK-008 closed with proof. | Complete TK-013. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-005: Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. (blocked) | claude | Approved catalog content and verified public licensure claims | TK-011 closed with proof. | Complete TK-013. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions
