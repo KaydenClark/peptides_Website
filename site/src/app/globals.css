@@ -41,10 +41,16 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .site-header { position: sticky; z-index: 5; top: 0; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.97); }
 .site-header__inner, .content-container { width: min(100% - 32px, 1280px); margin: 0 auto; }
 .site-header__inner { display: flex; min-height: 64px; align-items: center; gap: 20px; }
-.wordmark { margin-right: auto; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.04em; text-decoration: none; }
+.wordmark { margin-right: auto; overflow: hidden; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.04em; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
 .desktop-nav { display: none; gap: 28px; }
 .desktop-nav a, .menu-dialog nav a { font-size: 1rem; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-.header-catalog-link, .button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; background: var(--navy); color: var(--cream); font-weight: 800; text-decoration: none; }
+.header-catalog-link, .button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; background: var(--navy); color: var(--cream); font-weight: 800; text-decoration: none; white-space: nowrap; }
+/* Below 640px the header only has room for the wordmark and the menu button; the mobile menu already repeats "Browse catalog". */
+.header-catalog-link { display: none; flex: none; }
+.menu-button { flex: none; }
+@media (min-width: 640px) {
+  .header-catalog-link { display: inline-flex; }
+}
 .menu-button, .menu-close { min-height: 44px; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: 800; }
 .menu-overlay { position: fixed; z-index: 20; inset: 0; display: flex; justify-content: flex-end; background: rgba(34, 55, 89, 0.48); }
 .menu-dialog { width: min(100%, 360px); min-height: 100%; padding: 24px; background: var(--surface); box-shadow: -12px 0 32px rgba(34, 55, 89, 0.18); }
@@ -52,6 +58,7 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .menu-dialog nav { display: grid; gap: 22px; margin-top: 60px; }
 .hero { display: grid; gap: 36px; width: min(100% - 32px, 1280px); margin: 0 auto; padding: 44px 0; }
 .hero__copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+.hero__copy h1 { margin-bottom: 20px; }
 .hero__copy > p:not(.eyebrow) { max-width: 41rem; color: var(--muted-ink); font-size: 1.1rem; line-height: 1.6; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 12px; }
 .text-link { color: var(--ink); font-weight: 800; text-decoration-thickness: 2px; text-underline-offset: 5px; }
@@ -88,7 +95,7 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .catalog-preview__link { display: inline-block; margin-top: 28px; }
 .process-section { padding: 64px 0; background: #e9edf5; }
 .process-section h2 { max-width: 19ch; margin-bottom: 32px; }
-.process-list { display: grid; gap: 20px; max-width: 800px; padding: 0; list-style-position: inside; }
+.process-list { display: grid; gap: 20px; max-width: 800px; padding: 0; list-style-type: decimal; list-style-position: inside; }
 .process-list li { padding: 18px; border-left: 4px solid var(--teal); background: rgba(255, 255, 255, 0.68); line-height: 1.6; }
 .catalog-page h1 { margin-bottom: 18px; }
 .result-count { margin: 32px 0 18px; color: var(--muted-ink); font-weight: 800; }
@@ -125,9 +132,20 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .inquiry-form__disclaimer { margin: 0; color: var(--muted-ink); font-size: 0.86rem; line-height: 1.5; }
 .inquiry-form__success p { margin: 0; font-weight: 700; }
 
+.site-footer { border-top: 1px solid var(--line); background: var(--navy); color: var(--cream); }
+.site-footer__inner { display: grid; gap: 16px; width: min(100% - 32px, 1280px); margin: 0 auto; padding: 40px 0; }
+.site-footer__wordmark { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 1.2rem; font-weight: 700; }
+.site-footer__nav { display: flex; flex-wrap: wrap; gap: 20px; }
+.site-footer__nav a { color: var(--cream); font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.site-footer__notice { margin: 0; max-width: 60ch; color: rgba(255, 245, 235, 0.8); font-size: 0.92rem; line-height: 1.6; }
+
 @media (min-width: 768px) {
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .catalog-card__content { padding: 20px; }
+  /* The preview shows a fixed slice of records, so it keeps a 3-column cap at every
+     wider breakpoint instead of following the full catalog grid up to 5 columns,
+     which stranded the slice's last record alone on its own row. */
+  .catalog-preview .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 @media (min-width: 1024px) {
