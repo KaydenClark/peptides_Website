@@ -251,6 +251,14 @@ promotional tiles to fill a row.
 
 ## Product image system
 
+### Approved local-demo master candidate
+
+The owner approved one original blank-label, physical-vial render as the
+master visual candidate for the next local-only slice. Its final project path,
+derivatives, alt text, and rendered-context approval are recorded with the
+implementation ticket. It is not an approval of any catalog identity, strength,
+claim, or public listing.
+
 ### Master asset contract
 
 | Attribute | Required target |

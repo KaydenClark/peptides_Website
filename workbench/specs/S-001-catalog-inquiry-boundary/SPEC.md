@@ -304,7 +304,8 @@ Tickets are temporary tracer bullets within this stable capability record.
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
 | TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | done | none | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. |
-| TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | ready | none | Red/green route and content tests; 1440x1000 and 390x844 real-browser captures; keyboard navigation; owner review of the master-vial candidate; no network submission or private-source content. |
+| TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | ready | none | Red/green route and content tests; 1440x1000 and 390x844 real-browser captures; keyboard navigation; owner-approved blank-label master-vial candidate; no network submission or private-source content. |
+| TK-005 | Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. | blocked | Approved catalog content and verified public licensure claims | Failing server validation and database-write tests; direct-request rejection checks; real-browser acknowledgement and saved-state proof. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
 
@@ -335,6 +336,18 @@ mechanically excluded from public output. The slice has no inquiry form,
 submission, persistence, email, authentication, or deployment. Review the
 master-vial candidate and the complete slice at 1440 by 1000 and 390 by 844
 before expanding the catalog or generating remaining assets.
+
+### TK-005 - Deferred demo capture
+
+**Stance:** Builder
+
+Supabase is the intended PostgreSQL backend for a later demo inquiry-capture
+slice. The submitted data must be minimized to name, email, selected approved
+catalog entry, 18+ acknowledgment, and timestamp. It has no email delivery,
+owner portal, MFA, payment, order, reservation, quantity, or shipping
+calculation. The ticket remains blocked: actual GLP names, strengths, CAS data,
+blends, shipping-split wording, and public licensure representations require
+separate owner approval and verification before they can enter public content.
 
 ## Acceptance Criteria
 
@@ -470,6 +483,7 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Contract refinement | Added production visual acceptance criteria covering deployable catalog presentation, customer-facing copy, physical-vial imagery, 6–8 realistic fixtures, reference-site fidelity, responsive completion, and secondary inquiry prominence. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | S-001 is explicitly the canonical Product/Inquiry Master Spec; Blueprint now points detailed surface rules to the stable spec. | The local prototype remains a deliberately labeled design shell and does not satisfy final production visual acceptance. |
 | 2026-09-05 | Documentation structure | Created focused `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` handoffs so product and design agents can work from the relevant contract without reading the full Workbench governance packet. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | AGENTS routing, Blueprint references, and S-001 documentation impact now distinguish focused handoffs from Workbench governance. | `docs/CATALOG-SCHEMA.md` and `docs/LEGAL-CONTENT.md` remain future companion documents if their scope becomes necessary. |
 | 2026-09-05 | Specification expansion | Converted the owner-supplied reference teardown into cold-start Product and Design Specs covering the verified prototype baseline, exact full-site completion state, route and state contracts, catalog/variant/document/inquiry data rules, owner operations, design tokens, responsive layouts, physical-vial assets, accessibility, rejection conditions, launch gates, and proof matrix. Seeded TK-004 as the smallest non-public production-shaped visual tracer without authorizing its claim. | Documentation scope and links reviewed; `git diff --check`, Workbench render, doctor, JSON `next`, and Genesis layout validation run after the update. | Focused handoffs and S-001 now separate adopted project targets from unverified reference measurements and preserve the existing approved navy token. | No site code was changed. A separate owner build request is required before TK-004 may be claimed; live inquiry and launch gates remain blocked. |
+| 2026-09-05 | Demo scope | Owner authorized a local-first, non-transactional visual demo, approved the blank-label master-vial candidate, and selected Supabase as the later demo-capture backend. | Workbench render, doctor, and `git diff --check` passed after recording the decisions. | Blueprint and focused handoffs now distinguish the current local visual slice from the deferred capture path; TK-005 records the deferred dependency. | Actual catalog content, public licensure claims, persistent capture, and Vercel deployment remain open or separately authorized. |
 
 ## Completion Result
 

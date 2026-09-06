@@ -45,10 +45,10 @@ The founding prompt is preserved verbatim in
 |---|---|---|
 | Bootstrap runtime | Node.js 18+ | Runs Workbench verification and the local-only prototype in `site/`; no public runtime exists. |
 | Intended product surface | Next.js App Router with React, TypeScript, and Tailwind CSS | Server Components are the default; Client Components are limited to required browser interactivity. |
-| Intended storage | PostgreSQL | Store policy versions, acknowledgments, inquiry state, and notification jobs atomically. |
+| Intended storage | PostgreSQL via Supabase when a later capture slice is approved | A later demo inquiry-capture slice may persist only minimized inquiry fields; policy versions, acknowledgments, inquiry state, and notification jobs remain server-controlled. No Supabase project or credentials are configured. |
 | Submission boundary | Server Actions or route handlers | Browser code cannot be the authority for inquiry persistence, acknowledgments, authorization, or notification processing. |
 | Testing | Next.js server and browser accessibility checks | Browser controls and direct requests must enforce the same boundary. |
-| Deployment/runtime | Vercel target | Public deployment remains blocked pending counsel, host-policy, privacy, and security review. |
+| Deployment/runtime | Vercel target | The visual catalog is built and reviewed locally first. Any later Vercel deployment remains a separate owner-authorized action and public deployment remains blocked pending counsel, host-policy, privacy, and security review. |
 
 Rules that span multiple capabilities:
 

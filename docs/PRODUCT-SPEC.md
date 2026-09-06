@@ -69,6 +69,21 @@ As of 2026-09-05:
 - The checkpoint at the start of this specification pass was clean and matched
   `origin/integration` at commit `97a66387dbace606755cf9a44d81429710f1930e`.
 
+## Locked local-demo scope
+
+- The next delivery is a local-first, non-transactional visual catalog demo.
+  It has no price, cart, checkout, payment, order, reservation, quantity,
+  shipping calculation, email delivery, MFA, or owner portal.
+- The demo presents an 18+ acknowledgment and research/inquiry framing. Neither
+  is a legal clearance, an eligibility decision, or permission to publish an
+  unreviewed catalog entry.
+- Supabase is the intended PostgreSQL backend for a later, separately approved
+  demo inquiry-capture slice. It is not configured in this repository and no
+  personal data may be collected or transmitted until catalog content and
+  public licensure claims are approved and verified.
+- A Vercel deployment follows local validation only under a separate owner
+  deployment request. The production launch gates in this document still apply.
+
 ## Users and jobs
 
 ### Visitor
