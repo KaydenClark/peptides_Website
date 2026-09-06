@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
+
 import { CatalogCard } from "@/components/catalog-card";
 import { catalogRecords } from "@/data/catalog";
+
+export const metadata: Metadata = {
+  title: "Catalog",
+  description:
+    "Browse research-material records and their current review status. Informational only and not an offer to sell.",
+};
 
 export default function CatalogPage() {
   const recordCountLabel = catalogRecords.length === 1 ? "record" : "records";
