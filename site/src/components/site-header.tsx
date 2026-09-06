@@ -95,7 +95,14 @@ export function SiteHeader() {
         </div>
       </header>
       {isOpen ? (
-        <div className="menu-overlay">
+        <div
+          className="menu-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              closeMenu();
+            }
+          }}
+        >
           <aside
             aria-label="Navigation menu"
             aria-modal="true"
