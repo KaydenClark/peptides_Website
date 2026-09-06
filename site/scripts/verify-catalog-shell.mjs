@@ -1,40 +1,64 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const page = readFileSync(resolve("src/app/page.tsx"), "utf8");
+const requiredFiles = [
+  "src/data/catalog.ts",
+  "src/components/site-header.tsx",
+  "src/components/catalog-card.tsx",
+  "src/app/page.tsx",
+  "src/app/catalog/page.tsx",
+  "src/app/catalog/[slug]/page.tsx",
+  "public/images/research-materials/canonical-vial.png",
+];
+
+for (const file of requiredFiles) {
+  if (!existsSync(resolve(file))) {
+    throw new Error(`Missing TK-004 route or shared component: ${file}`);
+  }
+}
+
+const source = requiredFiles
+  .filter((file) => file.endsWith(".ts") || file.endsWith(".tsx"))
+  .map((file) => readFileSync(resolve(file), "utf8"))
+  .join("\n");
+
 const requiredCopy = [
-  "Research Catalog",
-  "Illustrative candidate",
-  "Five illustrative visuals",
-  "candidate-visual-05.png",
-  "Identity review pending",
-  "Local prototype — no submissions",
+  "Research catalog access is for research inquiry only.",
+  "Browse the catalog",
+  "View details",
+  "local-neutral-material",
+  "CATALOG_VISUAL_REVIEW",
+  "A glass research vial with a blank neutral label",
+  "Inquiry is not available for this record.",
 ];
 const prohibitedTerms = [
+  ">Buy<",
+  ">Add<",
   "checkout",
-  "payment",
   "pricing",
-  "quantity",
-  "shipping",
   "dosing",
   "administration",
   "weight-loss",
+  "prototype",
+  "placeholder",
+  "illustrative",
+  "demo",
 ];
 
 for (const copy of requiredCopy) {
-  if (!page.includes(copy)) {
-    throw new Error(`Missing required prototype copy: ${copy}`);
+  if (!source.includes(copy)) {
+    throw new Error(`Missing TK-004 catalog behavior: ${copy}`);
   }
 }
 
 for (const term of prohibitedTerms) {
-  if (page.toLowerCase().includes(term)) {
-    throw new Error(`Prohibited catalog-shell term found: ${term}`);
+  if (source.toLowerCase().includes(term)) {
+    throw new Error(`Prohibited TK-004 catalog term found: ${term}`);
   }
 }
 
-if (/https?:\/\//.test(page)) {
-  throw new Error("The local prototype must not include external links.");
+if (source.includes("<form") || source.includes("fetch(")) {
+  throw new Error("TK-004 must not expose a live inquiry submission path.");
 }
 
-console.log("catalog shell content guard passed");
+console.log("TK-004 catalog route guard passed");
