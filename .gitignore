@@ -2,6 +2,8 @@
 /mixing info/
 /Mixing and dose info.zip
 /private/
+# Owner reference exports containing mixing/dosing detail. Never commit.
+/catalog/
 
 # Credentials and sensitive operational data
 .env
