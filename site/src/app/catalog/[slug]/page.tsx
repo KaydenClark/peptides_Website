@@ -17,7 +17,7 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
   }
 
   return (
-    <section className="detail-page content-container" aria-labelledby="detail-title">
+    <section className="detail-page content-container" aria-labelledby="detail-title" style={{ "--accent": record.accent } as React.CSSProperties}>
       <nav aria-label="Breadcrumb">
         <Link className="breadcrumb" href="/catalog">Catalog</Link>
         <span aria-hidden="true"> / </span>
@@ -28,14 +28,37 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
           <Image alt={record.image.alt} fill priority sizes="(max-width: 1023px) 100vw, 620px" src={record.image.src} />
         </div>
         <div className="detail-copy">
-          <p className="eyebrow">{record.category}</p>
-          <h1 id="detail-title">{record.displayName}</h1>
+          <h1 className="detail-title" id="detail-title">
+            <span aria-hidden="true" className="swatch" />
+            <span>{record.displayName}</span>
+          </h1>
           <p className="page-lead">{record.summary}</p>
           <dl className="specification-list">
-            <div><dt>Identity</dt><dd>Not published</dd></div>
-            <div><dt>Record status</dt><dd>Not open for inquiries</dd></div>
-            <div><dt>Documentation</dt><dd>Not published</dd></div>
+            <div><dt>Product name</dt><dd>{record.displayName}</dd></div>
+            <div><dt>Vial sizes</dt><dd>{record.catalogStrengths.join(", ")}</dd></div>
+            <div><dt>Inventory status</dt><dd>Paused &mdash; not currently open for inquiries</dd></div>
+            <div><dt>Price</dt><dd>{record.price ?? "Not listed"}</dd></div>
           </dl>
+          <section className="research-notice" aria-labelledby="research-info-title">
+            <h2 id="research-info-title">Research information</h2>
+            {record.specifications.length > 0 ? (
+              <dl className="specification-list">
+                {record.specifications.map((specification) => (
+                  <div key={specification.label}><dt>{specification.label}</dt><dd>{specification.value}</dd></div>
+                ))}
+                <div><dt>Content review</dt><dd>{record.reviewedAt}</dd></div>
+                <div><dt>Catalog source</dt><dd>{record.source}</dd></div>
+              </dl>
+            ) : (
+              <>
+                <p>No additional research information is listed for this record.</p>
+                <dl className="specification-list">
+                  <div><dt>Content review</dt><dd>{record.reviewedAt}</dd></div>
+                  <div><dt>Catalog source</dt><dd>{record.source}</dd></div>
+                </dl>
+              </>
+            )}
+          </section>
           <section className="research-notice" aria-labelledby="inquiry-status-title">
             <h2 id="inquiry-status-title">Inquiry status</h2>
             <p>Inquiry is not available for this record.</p>

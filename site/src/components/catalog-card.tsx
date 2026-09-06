@@ -7,20 +7,21 @@ export function CatalogCard({ item }: { item: CatalogRecord }) {
   const detailPath = `/catalog/${item.slug}`;
 
   return (
-    <article className="catalog-card">
-      <Link aria-label={`View details for ${item.displayName}`} className="catalog-card__image" href={detailPath}>
+    <article className="catalog-card" style={{ "--accent": item.accent } as React.CSSProperties}>
+      <div className="catalog-card__image">
         <Image alt={item.image.alt} fill sizes="(max-width: 767px) 100vw, 302px" src={item.image.src} />
-      </Link>
+      </div>
+      <div aria-hidden="true" className="catalog-card__accent" />
       <div className="catalog-card__content">
-        <p className="eyebrow">{item.category}</p>
-        <h2>
-          <Link href={detailPath}>{item.displayName}</Link>
+        <h2 className="catalog-card__title">
+          <span aria-hidden="true" className="swatch" />
+          <Link className="catalog-card__link" href={detailPath}>{item.displayName}</Link>
         </h2>
-        <p>{item.summary}</p>
         <p className="catalog-card__status">Status: not open for inquiries</p>
-        <Link className="text-link" href={detailPath}>
-          View details
-        </Link>
+        <span aria-hidden="true" className="catalog-card__cta">
+          <span className="catalog-card__cta-label">View details</span>
+          <span className="catalog-card__cta-arrow">&rarr;</span>
+        </span>
       </div>
     </article>
   );

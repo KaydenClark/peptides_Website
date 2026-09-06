@@ -56,16 +56,20 @@ Passing a build or rendering the homepage alone is not completion.
 
 As of 2026-09-05:
 
-- `site/` is a Next.js 16.3.4 App Router prototype using React 19, TypeScript,
-  Tailwind CSS tooling, and one client-rendered page.
-- The prototype exposes five generic illustrative selectors, one neutral
-  candidate card, and a local-only selected state. It has no real routes beyond
-  `/`, no catalog data model, form, server submission, database, email,
-  authentication, owner surface, policies, or deployment.
-- The five candidate visuals are abstract research imagery and therefore do not
-  satisfy the production product-image contract.
-- The Workbench controls, S-001, and ADR-0001 through ADR-0011 exist. TK-001 is
-  complete; production inquiry and owner-operation tickets remain blocked.
+- `site/` is a Next.js 16.3.4 App Router application using React 19, TypeScript,
+  and Tailwind CSS tooling.
+- The routes are `/`, `/catalog`, and a statically generated `/catalog/[slug]`
+  detail page per record. There is no form, server submission, database, email,
+  authentication, owner surface, policy text, or deployment.
+- `site/src/data/catalog.ts` is the sole catalog source and holds twenty paused
+  owner-reviewed records carrying display name, vial sizes, package formats,
+  supplied chemical identifiers, and review/source metadata only.
+- Product imagery is the approved liquid-vial master plus one band variant per
+  product colour, with label text rendered in HTML/CSS.
+- The Workbench controls, S-001, and ADR-0001 through ADR-0011 exist. TK-001,
+  TK-004, TK-006, and TK-007 are complete; TK-008 through TK-011 carry the
+  outstanding front-end review defects, and production inquiry and
+  owner-operation tickets remain blocked.
 - The checkpoint at the start of this specification pass was clean and matched
   `origin/integration` at commit `97a66387dbace606755cf9a44d81429710f1930e`.
 

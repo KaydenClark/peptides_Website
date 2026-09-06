@@ -8,7 +8,19 @@ const requiredFiles = [
   "src/app/page.tsx",
   "src/app/catalog/page.tsx",
   "src/app/catalog/[slug]/page.tsx",
-  "public/images/research-materials/canonical-vial.png",
+  "public/images/research-materials/vial-master.png",
+  "public/images/research-materials/vial-coral.png",
+  "public/images/research-materials/vial-cerulean.png",
+  "public/images/research-materials/vial-grape.png",
+  "public/images/research-materials/vial-straw.png",
+  "public/images/research-materials/vial-mint.png",
+  "public/images/research-materials/vial-band-76bcae.png",
+  "public/images/research-materials/vial-band-7d84b2.png",
+  "public/images/research-materials/vial-band-f4d06f.png",
+  "public/images/research-materials/vial-band-f3ffbd.png",
+  "public/images/research-materials/vial-band-b2dbbf.png",
+  "public/images/research-materials/vial-band-214e34.png",
+  "public/images/research-materials/vial-band-09bc8a.png",
 ];
 
 for (const file of requiredFiles) {
@@ -26,9 +38,30 @@ const requiredCopy = [
   "Research catalog access is for research inquiry only.",
   "Browse the catalog",
   "View details",
-  "local-neutral-material",
-  "CATALOG_VISUAL_REVIEW",
-  "A glass research vial with a blank neutral label",
+  "5-Amino-1MQ",
+  "ARA-290",
+  "BPC-157",
+  "CJC-1295 (without DAC)",
+  "DSIP",
+  "GHK-Cu",
+  "Glutathione",
+  "Ipamorelin",
+  "KLOW Blend",
+  "L-Carnitine",
+  "MOTS-c",
+  "NAD+",
+  "PT-141",
+  "Retatrutide",
+  "Selank",
+  "Semax",
+  "SS-31",
+  "Tesamorelin",
+  "Thymosin Alpha-1",
+  "Tirzepatide",
+  "4813.45 g/mol",
+  "Vial sizes",
+  "Inventory status",
+  "Research information",
   "Inquiry is not available for this record.",
 ];
 const prohibitedTerms = [
@@ -59,6 +92,21 @@ for (const term of prohibitedTerms) {
 
 if (source.includes("<form") || source.includes("fetch(")) {
   throw new Error("TK-004 must not expose a live inquiry submission path.");
+}
+
+const catalogPage = readFileSync(resolve("src/app/catalog/page.tsx"), "utf8");
+
+for (const condition of ["catalogRecords.length === 0", "catalogRecords.length === 1"]) {
+  if (!catalogPage.includes(condition)) {
+    throw new Error(`Catalog count state is missing: ${condition}`);
+  }
+}
+
+const catalogData = readFileSync(resolve("src/data/catalog.ts"), "utf8");
+const recordCount = (catalogData.match(/^\s{4}id: "/gm) ?? []).length;
+
+if (recordCount !== 20) {
+  throw new Error(`Catalog must list the 20 owner-reviewed inventory records, found ${recordCount}`);
 }
 
 console.log("TK-004 catalog route guard passed");

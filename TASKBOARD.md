@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-005: Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. (blocked) | codex | Approved catalog content and verified public licensure claims | TK-004 completed as a review-only catalog visual slice. | Await owner-approved catalog records and verified public licensure claims before TK-005; all public-launch blockers remain. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-008: Correct hero, header, and process-list layout defects from the front-end review and add a shared footer carrying the non-transactional notice. (ready) | codex | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | TK-007 closed with proof. | Complete TK-008. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions

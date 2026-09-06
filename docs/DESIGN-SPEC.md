@@ -26,6 +26,11 @@ targets, and clarity take priority over visual novelty.
 
 - Brand palette: cream `#FFF5EB`, navy `#223759`, teal `#76BCAE`, periwinkle
   `#7D84B2`, and gold `#F4D06F`.
+- Body text is Ink Black `#101419`. Navy remains a structural colour for the
+  primary action, image stages, and the menu scrim, not for running text.
+- Product band palette: Vibrant Coral `#F87060`, Cerulean `#247BA0`, Grape Soda
+  `#8F3985`, Straw Gold `#E5D352`, and Mint Lead `#62A87C`. These are the main
+  batch of product colours and identify a record's label band.
 - Approximate visual weighting: cream 50%, navy 25%, teal 15%, periwinkle 7%,
   and gold 3%.
 - Catalog items use consistent physical glass-vial imagery. Abstract molecules,
@@ -114,7 +119,8 @@ shift the grid or crop the vial.
 |---|---|---|
 | Canvas | `#FFF5EB` | Dominant warm page background |
 | Surface | `#FFFFFF` | Cards, forms, menus, document panels |
-| Primary ink/action | `#223759` | Headings, body, navigation, footer, primary buttons |
+| Body ink | `#101419` | Headings, body copy, navigation, wordmark, links |
+| Structural navy | `#223759` | Primary button fill, image stages, menu scrim, shadows |
 | Muted ink | `#52666B` | Secondary copy after contrast validation |
 | Teal accent | `#76BCAE` | Tags, decorative label bands, supporting accents |
 | Teal tint | `#E6F2EE` | Selected/supporting surfaces with navy text |
@@ -122,11 +128,19 @@ shift the grid or crop the vial.
 | Lavender tint | `#E9EDF5` | Hero field, image stage, quiet secondary section |
 | Gold accent | `#F4D06F` | Small highlights, focus/selected cues with navy text |
 | Quiet border | `#D7E0DE` | Dividers and nonessential outlines |
+| Product coral | `#F87060` | Vial label band and the matching record accent |
+| Product cerulean | `#247BA0` | Vial label band and the matching record accent |
+| Product grape | `#8F3985` | Vial label band and the matching record accent |
+| Product straw | `#E5D352` | Vial label band and the matching record accent |
+| Product mint | `#62A87C` | Vial label band and the matching record accent |
 | Error | Define during implementation | Must pass contrast and not rely on color alone |
 | Success | Define during implementation | Must pass contrast and not imply order completion |
 
-Cream and white dominate. Navy provides structure. Teal supports categories;
-periwinkle and gold are restrained. Teal, periwinkle, and gold are not default
+Cream and white dominate. Navy provides structure and Ink Black carries running
+text. Teal supports categories; periwinkle and gold are restrained. The five
+product colours belong to the imagery and to the small record accent that repeats
+it; they are decorative identifiers, never the sole carrier of meaning, and never
+a background for small text. Teal, periwinkle, and gold are not default
 button backgrounds with white text. Never use periwinkle for small text on cream
 or teal for small normal-weight text without measured contrast approval.
 
@@ -267,7 +281,7 @@ claim, or public listing.
 | Glass | Clear with restrained edge reflections and realistic refraction |
 | Closure | Consistent silver-colored crimp cap unless actual packaging differs |
 | Label | Matte wrap with original brand and correct reviewed name/amount |
-| Accent | Restrained teal or periwinkle band within one template |
+| Accent | One product band colour from the product band palette within one template |
 | Catalog angle | Upright, front-facing, consistent camera perspective |
 | Hero angle | Modest tilt derived from the same master design |
 | Lighting | Soft studio key light with restrained highlights |
@@ -284,6 +298,26 @@ deterministically from reviewed data; never depend on generated small text for
 names, amounts, lots, claims, or identifiers. If an image is conceptual rather
 than a verified photograph, its internal review record must say so; public copy
 must not misrepresent it as the actual item.
+
+### Product band palette
+
+Each catalog record is assigned one band colour from the product band palette.
+The band is recoloured from the approved master render so glass, cap, label
+stock, lighting, shadow, geometry, and crop stay identical across the set; only
+the band hue changes. A record repeats its band colour in the interface as a
+small swatch beside the category and as a thin rule under the card image, and the
+record name and status remain text so no meaning depends on colour alone.
+
+| Band | Value | Asset |
+|---|---|---|
+| Vibrant Coral | `#F87060` | `vial-coral.png` |
+| Cerulean | `#247BA0` | `vial-cerulean.png` |
+| Grape Soda | `#8F3985` | `vial-grape.png` |
+| Straw Gold | `#E5D352` | `vial-straw.png` |
+| Mint Lead | `#62A87C` | `vial-mint.png` |
+
+The untinted master is `vial-master.png`. Adding a sixth product colour requires
+a new master-derived render and a recorded contrast check, not an ad-hoc tint.
 
 ### Approval sequence
 

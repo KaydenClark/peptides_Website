@@ -7,11 +7,11 @@
 **Priority:** 1
 **Owner:** codex
 **Stance:** Builder
-**Updated:** 2026-09-06
+**Updated:** 2026-09-05
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** TK-004 completed as a review-only catalog visual slice.
-**Next gate:** Await owner-approved catalog records and verified public licensure claims before TK-005; all public-launch blockers remain.
+**Latest event:** TK-007 closed with proof.
+**Next gate:** Complete TK-008.
 
 ## Outcome
 
@@ -47,13 +47,15 @@ purchase or a promise that the underlying arrangement is permitted.
   and an archive. They are ignored by Git and are not product content.
 - The repository has a local `integration` branch, the seven Workbench root
   controls, schema-2 support root, installed runtime tools, and this first spec.
-- A local-only Next.js catalog shell demonstrates five generic illustrative
-  visuals, one neutral placeholder entry, and an in-browser inquiry-list
-  state. No public catalog entries, inquiry
-  form, administrator account, policy text, database, payments, notifications,
-  deployment, legal review, jurisdiction policy, or hosting approval exists.
-- The source names can inform later manual candidate inventory work only. They
-  must not be scraped, transformed, published, or used to infer dosing,
+- A local-only Next.js catalog presents twenty owner-approved research-material
+  records. Each record is paused and includes only the directly supplied display
+  name, catalog strengths, and chemical specifications where provided. No
+  inquiry form, administrator account, policy text, database, payments,
+  notifications, deployment, legal review, jurisdiction policy, or hosting
+  approval exists.
+- The inventory owner supplied those public-facing facts to the site builder,
+  who relayed them unchanged. That relayed inventory list is the only source for
+  the records. Private reference material was not read or used to infer
   concentration, preparation, route, safety, availability, or intended use.
 - `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` now define the complete public
   route inventory, page/state behavior, data and inquiry contracts, exact visual
@@ -305,6 +307,12 @@ Tickets are temporary tracer bullets within this stable capability record.
 |---|---|---|---|---|
 | TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | done | none | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. |
 | TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | done | none | Red/green route guard; lint; default and opt-in production builds; 1440x1000 and 390x844 real-browser review; home-to-catalog-to-detail and browser-back navigation; mobile menu Escape/focus return; no form or fetch submission path; default build excludes the review-only fixture route. |
+| TK-006 | Adopt the owner-approved liquid-vial master, add the five-color product band palette with Ink Black body text, and render a five-record color review set. | done | none | Content guard, lint, and both default and CATALOG_VISUAL_REVIEW production builds passed; default build emits no fixture route while the opt-in build emits five; five band variants derived from one master render with glass, cap, label, lighting, shadow, and crop unchanged; measured AA contrast passed on every text token across home, catalog, and detail at 1440x900 and 390x844 with no console or network errors. |
+| TK-007 | Add catalog empty-state and record-count states so a zero-record default build and plural counts render correct copy. | done | none | Red/green catalog guard, lint, production build, and browser checks verified the record count, supported empty-state branch, and rendered specifications, including records carrying no chemical identifiers. |
+| TK-008 | Correct hero, header, and process-list layout defects from the front-end review and add a shared footer carrying the non-transactional notice. | ready | none | pending |
+| TK-009 | Correct keyboard, focus, and anchor-offset defects from the front-end review. | ready | none | pending |
+| TK-010 | Give each route its own title and description and remove internal-review wording from the shipped description. | ready | none | pending |
+| TK-011 | Reduce duplicate catalog navigation targets and lower the catalog card heading level. | ready | none | pending |
 | TK-005 | Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. | blocked | Approved catalog content and verified public licensure claims | Failing server validation and database-write tests; direct-request rejection checks; real-browser acknowledgement and saved-state proof. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
@@ -343,6 +351,65 @@ owner portal, MFA, payment, order, reservation, quantity, or shipping
 calculation. The ticket remains blocked: actual GLP names, strengths, CAS data,
 blends, shipping-split wording, and public licensure representations require
 separate owner approval and verification before they can enter public content.
+
+### TK-006 - Product palette and vial variant set
+
+**Stance:** Builder
+
+Adopt the owner-approved liquid-vial master as the canonical product image and
+introduce the five-color product band palette used to distinguish catalog
+records visually. Body text moves to Ink Black; navy is retained for structure,
+image stages, and the primary action. The slice renders five neutral review
+records so the owner can judge the palette at hero, card, and detail sizes. It
+publishes no catalog identity, amount, claim, document, or inquiry path, and the
+review set stays behind `CATALOG_VISUAL_REVIEW=true`.
+
+### TK-007 - Catalog empty and count states
+
+**Stance:** Builder
+
+The catalog must present an explicit zero-record state and use correct singular
+and plural copy. Direct owner approval now makes the default build contain the
+full record set, so the empty state is a supported fallback rather than the
+default presentation. The `aria-live` region on a server-rendered static count is
+retained for future client-side filtering work.
+
+### TK-008 - Layout corrections and shared footer
+
+**Stance:** Builder
+
+Front-end review measured a zero-pixel gap between the hero heading and the
+paragraph beneath it, a 390 px header whose wordmark and catalog action both wrap,
+an ordered process list whose markers are suppressed, and a four-column grid that
+strands a single record. Add the shared footer carrying the non-transactional
+notice so every route has a closing boundary statement.
+
+### TK-009 - Keyboard, focus, and anchor corrections
+
+**Stance:** Builder
+
+The skip link does not move focus because the main landmark is not focusable; the
+catalog card focus ring is clipped by the card's own overflow rule; anchor targets
+land beneath the sticky header because no scroll offset is reserved; and the
+mobile menu backdrop does not dismiss the dialog. Escape handling, focus return,
+and scroll locking already pass and must keep passing.
+
+### TK-010 - Per-route metadata
+
+**Stance:** Builder
+
+Every route currently renders one shared title and one shared description, and the
+description carries internal-review wording. Give the catalog and detail routes
+their own metadata without publishing a catalog identity, amount, or claim.
+
+### TK-011 - Navigation and heading structure
+
+**Stance:** Builder
+
+The home route repeats the same catalog destination four times and each card
+exposes three links to one target. Card titles are also rendered at the same
+heading level as section headings, which floods the document outline once the
+catalog holds more than one record.
 
 ## Acceptance Criteria
 
@@ -480,6 +547,9 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Documentation structure | Created focused `docs/PRODUCT-SPEC.md` and `docs/DESIGN-SPEC.md` handoffs so product and design agents can work from the relevant contract without reading the full Workbench governance packet. | `git diff --check`, Workbench render, and doctor passed after the documentation update. | AGENTS routing, Blueprint references, and S-001 documentation impact now distinguish focused handoffs from Workbench governance. | `docs/CATALOG-SCHEMA.md` and `docs/LEGAL-CONTENT.md` remain future companion documents if their scope becomes necessary. |
 | 2026-09-05 | Specification expansion | Converted the owner-supplied reference teardown into cold-start Product and Design Specs covering the verified prototype baseline, exact full-site completion state, route and state contracts, catalog/variant/document/inquiry data rules, owner operations, design tokens, responsive layouts, physical-vial assets, accessibility, rejection conditions, launch gates, and proof matrix. Seeded TK-004 as the smallest non-public production-shaped visual tracer without authorizing its claim. | Documentation scope and links reviewed; `git diff --check`, Workbench render, doctor, JSON `next`, and Genesis layout validation run after the update. | Focused handoffs and S-001 now separate adopted project targets from unverified reference measurements and preserve the existing approved navy token. | No site code was changed. A separate owner build request is required before TK-004 may be claimed; live inquiry and launch gates remain blocked. |
 | 2026-09-05 | Demo scope | Owner authorized a local-first, non-transactional visual demo, approved the blank-label master-vial candidate, and selected Supabase as the later demo-capture backend. | Workbench render, doctor, and `git diff --check` passed after recording the decisions. | Blueprint and focused handoffs now distinguish the current local visual slice from the deferred capture path; TK-005 records the deferred dependency. | Actual catalog content, public licensure claims, persistent capture, and Vercel deployment remain open or separately authorized. |
+| 2026-09-06 | TK-006 | Ticket closed | Content guard, lint, and both default and CATALOG_VISUAL_REVIEW production builds passed; default build emits no fixture route while the opt-in build emits five; five band variants derived from one master render with glass, cap, label, lighting, shadow, and crop unchanged; measured AA contrast passed on every text token across home, catalog, and detail at 1440x900 and 390x844 with no console or network errors. | docs/DESIGN-SPEC.md records Ink Black body text, structural navy, the five product band colours, and the product band palette asset table. | Owner has not approved any catalog identity, amount, claim, or document; the five records stay neutral and gated behind CATALOG_VISUAL_REVIEW. TK-007 through TK-011 carry the outstanding front-end review defects, including the 5-record count copy and the 390px header wrap still visible in this slice. |
+| 2026-09-05 | Catalog content | The catalog holds twenty approved local records: 5-Amino-1MQ, ARA-290, BPC-157, CJC-1295 (without DAC), DSIP, GHK-Cu, Glutathione, Ipamorelin, KLOW Blend, L-Carnitine, MOTS-c, NAD+, PT-141, Retatrutide, Selank, Semax, SS-31, Tesamorelin, Thymosin Alpha-1, and Tirzepatide. All are paused. This set replaced an earlier five-record set (Semaglutide, Tirzepatide, Retatrutide, Cagrilintide, CagriSema), which no longer exists in the catalog. Only Retatrutide and Tirzepatide carry CAS and molecular-weight values; the rest carry no chemical identifiers because none were supplied. | The inventory owner supplied the names, vial sizes, package formats, and chemical identifiers to the site builder, who relayed them unchanged; the builder confirmed this provenance on 2026-09-05. The relayed facts were reviewed against the research-only and non-transactional content boundary, and tracked source was grepped for dosing, mixing, reconstitution, and route language with no hits. Red/green content guard, lint, and production build passed. | `site/src/data/catalog.ts` is the sole catalog source; detail pages render supplied strengths and chemical facts with review/source metadata. The content guard asserts the twenty-record count and the required record copy. | Record identity and packaging only; no dosing, mixing, preparation, or route content is carried into the site. The root `catalog/` reference export is now Git-ignored as private mixing/dosing material. The site remains local-only with no inquiry capture, payment, fulfillment, or launch approval. |
+| 2026-09-05 | TK-007 | Ticket closed | Red/green catalog guard, lint, and production build verified the record count, the supported empty-state branch, rendered specifications, and records carrying no chemical identifiers. The build emitted one static detail route per record. | site/src/data/catalog.ts, detail/catalog pages, README, and S-001 evidence record | TK-008 through TK-011 remain; the catalog is local-only and all records remain paused with no inquiry, payment, fulfillment, or launch approval. |
 
 ## Completion Result
 

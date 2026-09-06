@@ -20,8 +20,36 @@ Writable paths are this repository's source, root controls, `docs/`, and the
 manifest-declared `workbench/` lanes. Do not edit the private-source paths,
 managed `workbench/tools/`, or the product list without owner approval and a
 documented compliance review. Never add payments, ordering, fulfillment,
-quantities, pricing, dosing, preparation, administration, medical claims, or
-personal-use instructions.
+quantities, pricing logic, dosing, preparation, administration, medical claims,
+or personal-use instructions. Owner-approved informational pricing may be
+displayed only when it is clearly non-transactional and does not lead to a
+checkout, order, reservation, or payment flow.
+
+## Website-specific owner brief
+
+The website is a private informational inventory for research-use-only peptide
+products currently owned by the operator. It must not represent those products
+as FDA-approved medications or as approved for human use.
+
+Allowed catalog content is limited to owner-reviewed product names, confirmed
+vial sizes or packaging, factual owner-controlled inventory status, optional
+informational pricing when applicable, and factual research information with
+traceable provenance. Inventory status and pricing must never imply a sale,
+guaranteed availability, allocation, eligibility, safety, or quality outcome.
+
+Do not provide medical advice, recommend that anyone take a product, make
+disease-treatment or efficacy claims, or provide dosing, mixing, preparation,
+reconstitution, route, administration, or other human-use instructions. Do not
+derive public content from private mixing/dosing source files. Keep the site
+private and informational unless the owner separately approves a reviewed
+publication, privacy, legal, host, and security path.
+
+Organize the experience around a clear research-only notice, a searchable
+catalog, concise product records, confirmed vial/package details, inventory
+status, optional informational price, and source/review metadata. Use readable
+mobile-first layouts, high contrast, generous touch targets, and neutral
+language. Exclude cart, checkout, buy/order/reserve actions, payment capture,
+quantity selection, urgency messaging, testimonials, and marketing claims.
 
 Ask before deleting data, changing Git history, adding a paid service, creating
 or pushing a remote repository, collecting additional personal data, changing

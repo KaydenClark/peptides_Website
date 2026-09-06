@@ -24,7 +24,7 @@ export default function Home() {
           </div>
         </div>
         <div className="hero__art" aria-hidden="true">
-          <Image fill priority sizes="(max-width: 1023px) 100vw, 45vw" src="/images/research-materials/canonical-vial.png" alt="" />
+          <Image fill priority sizes="(max-width: 1023px) 100vw, 45vw" src="/images/research-materials/vial-master.png" alt="" />
         </div>
       </section>
 
@@ -35,7 +35,7 @@ export default function Home() {
           <p>Each record keeps its status visible and its details easy to inspect.</p>
         </div>
         <div className="catalog-grid">
-          {catalogRecords.map((record) => (
+          {catalogRecords.slice(0, 6).map((record) => (
             <CatalogCard item={record} key={record.id} />
           ))}
         </div>
