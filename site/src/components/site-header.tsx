@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const navigation = [
@@ -9,6 +10,8 @@ const navigation = [
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const openButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -64,38 +67,53 @@ export function SiteHeader() {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <p className="notice-strip">
-        Research catalog access is for research inquiry only.
-      </p>
-      <header className="site-header">
-        <div className="site-header__inner">
-          <Link className="wordmark" href="/">
-            Peptide Method
-          </Link>
-          <nav className="desktop-nav" aria-label="Main navigation">
-            {navigation.map((item) => (
-              <Link href={item.href} key={item.href}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <Link className="header-catalog-link" href="/catalog">
-            Browse catalog
-          </Link>
-          <button
-            aria-controls="mobile-navigation"
-            aria-expanded={isOpen}
-            className="menu-button"
-            onClick={() => setIsOpen(true)}
-            ref={openButtonRef}
-            type="button"
-          >
-            Menu
-          </button>
-        </div>
-      </header>
+      {/* The notice strip and header share one sticky wrapper so the teal band
+          stays pinned above the header at every scroll position. The home page
+          carries the full notice; every other route keeps the colour as a plain
+          decorative sliver, with the research-only wording held by the footer. */}
+      <div className="site-banner">
+        {isHome ? (
+          <p className="notice-strip">
+            Research catalog access is for research inquiry only.
+          </p>
+        ) : (
+          <div aria-hidden="true" className="notice-strip notice-strip--slim" />
+        )}
+        <header className="site-header">
+          <div className="site-header__inner">
+            <Link className="wordmark" href="/">
+              <span className="wordmark__primary">Peptide</span>{" "}
+              <span className="wordmark__secondary">Method</span>
+            </Link>
+            <nav className="desktop-nav" aria-label="Main navigation">
+              {navigation.map((item) => (
+                <Link href={item.href} key={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <button
+              aria-controls="mobile-navigation"
+              aria-expanded={isOpen}
+              className="menu-button"
+              onClick={() => setIsOpen(true)}
+              ref={openButtonRef}
+              type="button"
+            >
+              Menu
+            </button>
+          </div>
+        </header>
+      </div>
       {isOpen ? (
-        <div className="menu-overlay">
+        <div
+          className="menu-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              closeMenu();
+            }
+          }}
+        >
           <aside
             aria-label="Navigation menu"
             aria-modal="true"
@@ -113,9 +131,6 @@ export function SiteHeader() {
                   {item.label}
                 </Link>
               ))}
-              <Link href="/catalog" onClick={closeMenu}>
-                Browse catalog
-              </Link>
             </nav>
           </aside>
         </div>

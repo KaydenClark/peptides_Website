@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Icon } from "@/components/icon";
 import { InquiryForm } from "@/components/inquiry-form";
 import { catalogRecords, getCatalogRecord } from "@/data/catalog";
 
@@ -9,6 +11,20 @@ import { sendCatalogInquiry } from "./inquiry-action";
 
 export function generateStaticParams() {
   return catalogRecords.map((record) => ({ slug: record.slug }));
+}
+
+export async function generateMetadata(props: PageProps<"/catalog/[slug]">): Promise<Metadata> {
+  const { slug } = await props.params;
+  const record = getCatalogRecord(slug);
+
+  if (!record) {
+    return { title: "Record not found" };
+  }
+
+  return {
+    title: record.displayName,
+    description: `Informational research catalog record for ${record.displayName}. Not an offer, order, price, or medical claim.`,
+  };
 }
 
 export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug]">) {
@@ -51,7 +67,7 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
             </ul>
           </div>
           <section className="research-notice" aria-labelledby="research-info-title">
-            <h2 id="research-info-title">Research information</h2>
+            <h2 id="research-info-title"><span className="research-notice__badge"><Icon name="research" /></span>Research information</h2>
             {record.specifications.length > 0 ? (
               <dl className="specification-list">
                 {record.specifications.map((specification) => (
@@ -70,8 +86,8 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
               </>
             )}
           </section>
-          <section className="research-notice" aria-labelledby="inquiry-status-title">
-            <h2 id="inquiry-status-title">Contact about this item</h2>
+          <section className="research-notice research-notice--contact" aria-labelledby="inquiry-status-title">
+            <h2 id="inquiry-status-title"><span className="research-notice__badge"><Icon name="contact" /></span>Contact about this item</h2>
             <InquiryForm action={sendCatalogInquiry.bind(null, record.id, record.displayName)} />
           </section>
         </div>

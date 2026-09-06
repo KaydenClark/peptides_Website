@@ -5,8 +5,9 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
-  title: "Peptide Method",
-  description: "A non-public research catalog for internal visual validation.",
+  title: { default: "Peptide Method", template: "%s · Peptide Method" },
+  description:
+    "A private, informational research-material catalog. Browsing and inquiries are informational only and are not orders or offers.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -14,7 +15,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en">
       <body>
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

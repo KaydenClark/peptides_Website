@@ -16,43 +16,79 @@
   --product-softmint: #b2dbbf;
   --product-forest: #214e34;
   --product-brightgreen: #09bc8a;
-  --teal: #76bcae;
+  /* Brand set. Navy and coral carry the wordmark, teal carries the banner,
+     ink carries the type. Coral matches the palettes' F87060 so the brand
+     accent and the coral vial swatch stay the same colour. */
+  --teal: #70c1b3;
+  --coral: #f87060;
   --lavender: #7d84b2;
   --yellow: #f4d06f;
   --surface: #ffffff;
-  --muted-ink: #52666b;
-  --line: #d7e0de;
-  --shadow: 0 14px 32px rgba(34, 55, 89, 0.1);
+  /* Pastels for small tinted panels. The first two are the palette colours
+     themselves; the rest are the palette hues mixed toward white so the set
+     sits at a similar lightness and stays well clear of the saturated vial
+     band colours it appears beside. */
+  --pastel-lime: #f3ffbd;
+  --pastel-mint: #b2dbbf;
+  --pastel-blush: #fccdc7;
+  --pastel-sky: #d8e7f0;
+  --pastel-butter: #fbeecd;
+  --pastel-lilac: #dcdff0;
+  /* The brand coral deepened just enough to clear the 3:1 large-text contrast
+     bar on cream. Reads as the same colour as --coral at heading size; use it
+     wherever coral has to carry actual words rather than decoration. */
+  --coral-text: #ee5f4e;
+  /* Washed-out versions for large section and panel backgrounds. */
+  --wash-sky: #eef4f9;
+  --wash-mint: #eaf5ef;
+  --wash-lime: #f8fce6;
+  /* Secondary type is a neutral gray stepped down from --ink, so muted copy
+     reads as the same family as the base font rather than a third hue. */
+  --muted-ink: #4f555c;
+  --line: #e0dcd6;
+  --shadow: 0 14px 32px rgba(34, 55, 89, 0.12);
+  /* Clears the pinned banner, which is tallest on narrow screens where the
+     home-page notice wraps to two lines (measured 123px at 375px wide). */
+  --banner-offset: 128px;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--banner-offset); }
 body { margin: 0; background: var(--cream); color: var(--ink); font-family: Arial, Helvetica, sans-serif; }
 button, a { -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
-a:focus-visible, button:focus-visible { outline: 4px solid var(--yellow); outline-offset: 4px; }
+a:focus-visible, button:focus-visible { outline: 4px solid var(--navy); outline-offset: 4px; }
+#main-content:focus { outline: none; }
 h1, h2, p { margin-top: 0; }
 h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -0.04em; }
 h1 { font-size: clamp(2.6rem, 6vw, 4.7rem); line-height: 0.98; }
 h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .skip-link { position: fixed; z-index: 10; top: 12px; left: 12px; padding: 12px 16px; background: var(--yellow); color: var(--ink); font-weight: 800; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
+/* The whole banner sticks, so the teal strip stays visible at every scroll
+   position instead of scrolling away above the header. */
+.site-banner { position: sticky; z-index: 5; top: 0; }
 .notice-strip { margin: 0; padding: 9px 20px; background: var(--teal); color: var(--ink); font-size: 0.84rem; font-weight: 700; text-align: center; }
-.site-header { position: sticky; z-index: 5; top: 0; border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.97); }
+/* Off the home page the band carries no wording, so it collapses to a plain
+   sliver of colour. */
+.notice-strip--slim { height: 10px; padding: 0; }
+.site-header { border-bottom: 1px solid var(--line); background: rgba(255, 255, 255, 0.97); }
 .site-header__inner, .content-container { width: min(100% - 32px, 1280px); margin: 0 auto; }
 .site-header__inner { display: flex; min-height: 64px; align-items: center; gap: 20px; }
-.wordmark { margin-right: auto; overflow: hidden; color: var(--ink); font-family: Georgia, "Times New Roman", serif; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.04em; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.wordmark { margin-right: auto; overflow: hidden; font-family: Georgia, "Times New Roman", serif; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.04em; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.wordmark__primary { color: var(--navy); }
+.wordmark__secondary { color: var(--coral); }
 .desktop-nav { display: none; gap: 28px; }
 .desktop-nav a, .menu-dialog nav a { font-size: 1rem; font-weight: 700; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-.header-catalog-link, .button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 18px; border-radius: 8px; background: var(--navy); color: var(--cream); font-weight: 800; text-decoration: none; white-space: nowrap; }
-/* Below 640px the header only has room for the wordmark and the menu button; the mobile menu already repeats "Browse catalog". */
-.header-catalog-link { display: none; flex: none; }
+/* Pastel primary. The tint is light, so it keeps a defined edge and a hover
+   shift to stay obviously pressable rather than reading as a coloured label. */
+.button-link { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; padding: 12px 20px; border: 1px solid rgba(16, 20, 25, 0.16); border-radius: 999px; background: var(--pastel-mint); color: var(--ink); font-weight: 800; text-decoration: none; white-space: nowrap; transition: background-color 160ms ease, border-color 160ms ease; }
+.button-link:hover { border-color: rgba(16, 20, 25, 0.34); background: #a2d3b2; }
+.button-link--secondary { background: var(--surface); }
+.button-link--secondary:hover { background: var(--wash-lime); }
 .menu-button { flex: none; }
-@media (min-width: 640px) {
-  .header-catalog-link { display: inline-flex; }
-}
 .menu-button, .menu-close { min-height: 44px; border: 0; background: transparent; color: var(--ink); cursor: pointer; font: inherit; font-weight: 800; }
-.menu-overlay { position: fixed; z-index: 20; inset: 0; display: flex; justify-content: flex-end; background: rgba(34, 55, 89, 0.48); }
+.menu-overlay { position: fixed; z-index: 20; inset: 0; display: flex; justify-content: flex-end; background: rgba(34, 55, 89, 0.5); }
 .menu-dialog { width: min(100%, 360px); min-height: 100%; padding: 24px; background: var(--surface); box-shadow: -12px 0 32px rgba(34, 55, 89, 0.18); }
 .menu-close { display: block; margin-left: auto; padding: 8px; text-decoration: underline; text-underline-offset: 4px; }
 .menu-dialog nav { display: grid; gap: 22px; margin-top: 60px; }
@@ -61,10 +97,28 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .hero__copy h1 { margin-bottom: 20px; }
 .hero__copy > p:not(.eyebrow) { max-width: 41rem; color: var(--muted-ink); font-size: 1.1rem; line-height: 1.6; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; margin-top: 12px; }
+/* Link text stays ink for contrast; coral rides the underline so the brand pair
+   shows up in the type without weakening the reading color. */
+.text-link, .desktop-nav a, .menu-dialog nav a, .breadcrumb, .catalog-card__cta-label, .site-footer__nav a { text-decoration-color: var(--coral); }
 .text-link { color: var(--ink); font-weight: 800; text-decoration-thickness: 2px; text-underline-offset: 5px; }
 .hero__art { position: relative; min-height: 280px; overflow: hidden; border-radius: 16px; background: var(--navy); }
 .hero__art img, .catalog-card__image img, .detail-image img { object-fit: contain; }
+.hero__accent { color: var(--coral-text); }
 .eyebrow { margin-bottom: 12px; color: var(--muted-ink); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+/* Tinted facts about the catalog itself, sitting between the hero and the
+   first records. Every value here is read from the catalog data or states a
+   property of the site - nothing describes a product. */
+.highlights { width: min(100% - 32px, 1280px); margin: 0 auto; padding-bottom: 8px; }
+.highlight-grid { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.highlight-card { display: flex; flex-direction: column; align-items: flex-start; padding: 22px; border-radius: 16px; line-height: 1.55; }
+.highlight-card--lime { background: var(--pastel-lime); }
+.highlight-card--mint { background: var(--pastel-mint); }
+.highlight-card--sky { background: var(--pastel-sky); }
+.highlight-card--lilac { background: var(--pastel-lilac); }
+.highlight-card__figure { display: block; margin-bottom: 10px; font-family: Georgia, "Times New Roman", serif; font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.highlight-card__badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-bottom: 18px; border-radius: 50%; background: rgba(255, 255, 255, 0.75); color: var(--ink); }
+.highlight-card__title { display: block; margin-bottom: 6px; font-size: 1.05rem; }
+.highlight-card__detail { display: block; color: var(--muted-ink); }
 .catalog-preview, .catalog-page, .detail-page { padding-top: 64px; padding-bottom: 80px; }
 .section-heading { max-width: 42rem; margin-bottom: 32px; }
 .section-heading h2 { margin-bottom: 14px; }
@@ -74,14 +128,14 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .catalog-card:hover { border-color: var(--accent, var(--teal)); box-shadow: var(--shadow); }
 /* Ring the whole card on keyboard focus; falls back to the default link ring without :has(). */
 @supports selector(:has(*)) {
-  .catalog-card:has(.catalog-card__link:focus-visible) { outline: 4px solid var(--yellow); outline-offset: 4px; }
+  .catalog-card:has(.catalog-card__link:focus-visible) { outline: 4px solid var(--navy); outline-offset: 4px; }
   .catalog-card__link:focus-visible { outline: none; }
 }
 .swatch { flex: none; margin-top: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent, var(--teal)); }
 .catalog-card__accent { height: 3px; background: var(--accent, var(--teal)); }
 .catalog-card__image { position: relative; aspect-ratio: 1; background: var(--navy); }
 .catalog-card__content { display: flex; flex: 1; flex-direction: column; padding: 16px 16px 20px; }
-.catalog-card__title { display: flex; align-items: flex-start; gap: 9px; margin-bottom: 12px; font-size: 1.5rem; line-height: 1.25; }
+.catalog-card__title { display: flex; align-items: flex-start; gap: 9px; margin-top: 0; margin-bottom: 12px; font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -0.04em; font-size: 1.5rem; line-height: 1.25; }
 .catalog-card__title .swatch { margin-top: 0.42em; }
 .catalog-card__link { text-decoration: none; }
 /* Stretch the single card link over the whole card so any click opens the record. */
@@ -93,10 +147,20 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .catalog-card__cta-arrow { transition: transform 160ms ease; }
 .catalog-card:hover .catalog-card__cta-arrow { transform: translateX(4px); }
 .catalog-preview__link { display: inline-block; margin-top: 28px; }
-.process-section { padding: 64px 0; background: #e9edf5; }
+.process-section { padding: 64px 0; background: var(--wash-sky); }
 .process-section h2 { max-width: 19ch; margin-bottom: 32px; }
-.process-list { display: grid; gap: 20px; max-width: 800px; padding: 0; list-style-type: decimal; list-style-position: inside; }
-.process-list li { padding: 18px; border-left: 4px solid var(--teal); background: rgba(255, 255, 255, 0.68); line-height: 1.6; }
+.process-list { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; }
+/* Each step is a tinted card carrying an icon, a bold label, and a muted line
+   of detail. The pastel is decorative only: the step's meaning is in the text,
+   never in the colour alone. */
+.process-card { display: flex; flex-direction: column; align-items: flex-start; padding: 22px; border-radius: 16px; line-height: 1.55; }
+.process-card--lime { background: var(--pastel-lime); }
+.process-card--mint { background: var(--pastel-mint); }
+.process-card--blush { background: var(--pastel-blush); }
+.process-card__badge { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin-bottom: 18px; border-radius: 50%; background: rgba(255, 255, 255, 0.75); color: var(--ink); }
+.process-card__title { display: block; margin-bottom: 6px; font-size: 1.05rem; }
+.process-card__detail { display: block; color: var(--muted-ink); }
+.icon { width: 22px; height: 22px; }
 .catalog-page h1 { margin-bottom: 18px; }
 .result-count { margin: 32px 0 18px; color: var(--muted-ink); font-weight: 800; }
 .catalog-empty-state { margin: 24px 0; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--muted-ink); }
@@ -110,15 +174,20 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .specification-list div { display: grid; grid-template-columns: minmax(130px, 0.7fr) 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .specification-list dt { font-weight: 800; }
 .specification-list dd { margin: 0; color: var(--muted-ink); }
-.research-notice { padding: 22px; border-radius: 12px; background: #e6f2ee; }
-.research-notice h2 { margin-bottom: 12px; font-size: 1.45rem; }
+.research-notice { padding: 22px; border-radius: 12px; background: var(--wash-mint); }
+.research-notice--contact { background: var(--wash-sky); }
+.research-notice h2 { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 1.45rem; }
+/* The heading icon sits in its own tinted disc so it reads as a label mark
+   rather than part of the wording. */
+.research-notice h2 .icon { flex: none; }
+.research-notice__badge { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.8); color: var(--ink); }
 .research-notice p { margin-bottom: 12px; line-height: 1.55; }
 .research-notice p:last-child { margin-bottom: 0; }
 
 .size-pills { margin: 26px 0; }
 .size-pills__label { display: block; margin-bottom: 10px; font-weight: 800; }
 .size-pills__list { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.size-pills__item { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 700; }
+.size-pills__item { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--wash-lime); font-weight: 700; }
 
 .inquiry-form { display: grid; gap: 16px; margin-top: 4px; }
 .inquiry-form__hint { margin: 0; color: var(--muted-ink); font-size: 0.92rem; line-height: 1.5; }
@@ -140,6 +209,8 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .site-footer__notice { margin: 0; max-width: 60ch; color: rgba(255, 245, 235, 0.8); font-size: 0.92rem; line-height: 1.6; }
 
 @media (min-width: 768px) {
+  .process-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .highlight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .catalog-card__content { padding: 20px; }
   /* The preview shows a fixed slice of records, so it keeps a 3-column cap at every
@@ -149,9 +220,12 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 }
 
 @media (min-width: 1024px) {
+  /* Matches the taller header so anchor targets clear the pinned banner. */
+  :root { --banner-offset: 120px; }
   .site-header__inner { min-height: 80px; }
   .desktop-nav { display: flex; }
   .menu-button { display: none; }
+  .highlight-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 560px; gap: 64px; padding: 64px 0; }
   .hero__art { min-height: 400px; }
   .catalog-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
