@@ -7,11 +7,11 @@
 **Priority:** 1
 **Owner:** codex
 **Stance:** Builder
-**Updated:** 2026-09-05
+**Updated:** 2026-09-06
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** Reference teardown converted into complete product and design implementation contracts.
-**Next gate:** Owner explicitly authorizes claiming TK-004; live inquiry work remains blocked by final policies and security design.
+**Latest event:** TK-004 completed as a review-only catalog visual slice.
+**Next gate:** Await owner-approved catalog records and verified public licensure claims before TK-005; all public-launch blockers remain.
 
 ## Outcome
 
@@ -304,7 +304,7 @@ Tickets are temporary tracer bullets within this stable capability record.
 | Ticket | Slice | Status | Blockers | Proof |
 |---|---|---|---|---|
 | TK-001 | Build a non-public catalog-shell prototype with neutral placeholder data, inquiry-list terminology, and no submit route. | done | none | Content guard, lint, production build, and 390x844 Playwright interaction/keyboard checks passed; source guard excludes transaction and use-guidance terms. |
-| TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | ready | none | Red/green route and content tests; 1440x1000 and 390x844 real-browser captures; keyboard navigation; owner-approved blank-label master-vial candidate; no network submission or private-source content. |
+| TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | done | none | Red/green route guard; lint; default and opt-in production builds; 1440x1000 and 390x844 real-browser review; home-to-catalog-to-detail and browser-back navigation; mobile menu Escape/focus return; no form or fetch submission path; default build excludes the review-only fixture route. |
 | TK-005 | Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. | blocked | Approved catalog content and verified public licensure claims | Failing server validation and database-write tests; direct-request rejection checks; real-browser acknowledgement and saved-state proof. |
 | TK-002 | Implement server-side inquiry persistence, versioned acknowledgments, idempotency, and owner notification job after policy approval. | blocked | Final policies and security design | Failing-request tests, database transaction test, and notification-failure retry test. |
 | TK-003 | Add protected owner queue, catalog workflow, policy publishing, retention operations, and launch review after legal and host approvals. | blocked | Launch blockers | Authorization, MFA, privacy, accessibility, manual owner-operation, and deployment checks. |
@@ -319,23 +319,18 @@ state but provides no inquiry submission, real product entries, admin access,
 persistence, payment, price, quantity, or user-use content. The ticket is
 deliberately useful without depending on the public-launch decisions.
 
-### TK-004 - Next eligible task
+### TK-004 - Completed task
 
 **Stance:** Builder
 
-TK-004 is ready as a sufficiently specified tracer bullet, but this
-specification request does not authorize an agent to claim or implement it. A
-separate owner build request is required.
-
-When authorized, begin with failing route/content/browser tests and replace the
-abstract-selector homepage with a non-public vertical slice through the shared
-shell, hero, typed catalog data seam, one neutral physical-vial card row, and a
-working catalog-to-detail route. The fixture must be clearly non-production in
-the data layer, contain no private-source-derived name or amount, and be
-mechanically excluded from public output. The slice has no inquiry form,
-submission, persistence, email, authentication, or deployment. Review the
-master-vial candidate and the complete slice at 1440 by 1000 and 390 by 844
-before expanding the catalog or generating remaining assets.
+Completed 2026-09-06 under an owner build request. The former abstract-selector
+page is replaced by shared notice/header navigation, a product-led hero, typed
+neutral record, physical-vial catalog card, and a matching catalog detail route.
+The original blank-label master vial is used without publishing a product
+identity, amount, claim, or document. The record is gated behind
+`CATALOG_VISUAL_REVIEW=true`; a default production build emits no parameterized
+fixture route. The slice has no inquiry form, submission, persistence, email,
+authentication, deployment, or private-source content.
 
 ### TK-005 - Deferred demo capture
 
@@ -474,6 +469,7 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Architecture | Recorded ADR-0001 through ADR-0005 from owner-provided validation context. | Official FDA materials reviewed; `adr.mjs register`, ADR validation, wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | ADR register and five accepted rationale records linked from this spec. | The ADRs preserve project boundaries only; no legal clearance, public catalog, product implementation, or launch approval exists. |
 | 2026-09-05 | Architecture | Recorded ADR-0006 through ADR-0010 after comparison with existing decisions; preserved the owner-selected 18+ inquiry requirement. | FTC and OWASP guidance reviewed; ADR validation, wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | Five accepted rationale records linked from this spec; guest inquiry, canonical catalog, owner-operations, notification, and private-access controls clarified. | No legal clearance, public catalog, product implementation, or launch approval exists. |
 | 2026-09-05 | Architecture | Superseded the planned Django prototype with the owner-approved Next.js App Router target and recorded ADR-0011. | ADR validation, wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | Blueprint and S-001 now specify React, TypeScript, Tailwind CSS, Server Components by default, server-controlled submissions, and Vercel deployability. | No application, deployment, public catalog, legal clearance, or launch approval exists. |
+| 2026-09-06 | TK-004 | Completed a review-only home, catalog, and matching detail route with shared notice/header, one typed neutral record, and the approved blank-label physical-vial master candidate. | Red test confirmed absent data/routes; `npm.cmd test`, `npm.cmd run lint`, and production builds passed. Default build had no parameterized fixture route; `CATALOG_VISUAL_REVIEW=true` emitted `/catalog/local-neutral-material`. Real browser review at 1440x1000 and 390x844 confirmed the home, catalog/detail navigation, browser-back behavior, vial alt text, and mobile dialog Escape/focus return. | `site/src/data/catalog.ts`, shared catalog/header components, App Router pages, and the route guard now hold the slice. | No owner-approved public catalog record, inquiry submission, persistence, email, authentication, deployment, legal review, policy, or security design exists. |
 | 2026-09-05 | Design | Replaced the initial visual palette with the owner-provided five-color palette and accessible role mapping. | Image inspected; wiki validation, Workbench render, doctor, layout validation, and `git diff --check` passed. | S-001 design direction now defines `#76BCAE`, `#7D84B2`, `#F4D06F`, `#FFF5EB`, and `#223759`. | No interface exists yet; final component states still require built-interface contrast checks. |
 | 2026-09-05 | Design | Refined palette roles and visual weighting: cream and navy dominate, teal supports categories, lavender supports secondary surfaces, and yellow is an accent. | Wiki validation, Workbench render, doctor, and `git diff --check` passed. | S-001 now defines approximate 50/25/15/7/3 palette usage and role-specific assignments. | No interface exists yet; final component states still require built-interface contrast checks. |
 | 2026-09-05 | TK-001 | Created a local-only Next.js catalog shell with one neutral placeholder card, a reusable generated vial asset, programmatic label treatment, and an in-browser inquiry-list state. | `npm.cmd test`, `npm.cmd run lint`, and telemetry-disabled `npm.cmd run build` passed. Playwright verified the 390 by 844 layout and the local selected state. | This spec now records prototype commands and local browser evidence. | The five prior exploratory assets remain unreferenced pending explicit deletion approval. The shell has no reviewed catalog entries, submission, persistence, real data, legal clearance, or launch approval. |

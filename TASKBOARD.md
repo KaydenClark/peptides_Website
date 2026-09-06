@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-004: Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. (ready) | codex | Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation. | Reference teardown converted into complete product and design implementation contracts. | Owner explicitly authorizes claiming TK-004; live inquiry work remains blocked by final policies and security design. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-005: Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. (blocked) | codex | Approved catalog content and verified public licensure claims | TK-004 completed as a review-only catalog visual slice. | Await owner-approved catalog records and verified public licensure claims before TK-005; all public-launch blockers remain. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions
