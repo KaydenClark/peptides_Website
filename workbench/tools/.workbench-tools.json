@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repository": "unknown",
+    "release": "v3.1.1",
+    "commit": "unknown",
+    "dirty": false
+  },
+  "installedAt": "2026-09-05",
+  "files": {
+    "adr.mjs": "3c52ed02492d33386b1919b3193fc9450086e2e2c0f5d503778f70bd9fe7ec70",
+    "diagnostics.mjs": "87dc941470d60f792d32a0e14610374278fb1e504c0feebd9a6253c9c1e1f30a",
+    "markdown-table.mjs": "d000e30e5dd16fc623a09d53460ccc45cceeede7b7aa2e91ea8e0dbe99f6b851",
+    "privacy.mjs": "dd726d410d0d7a84055483e0eb6c21850246229c25997509ed5b481d2b7e8607",
+    "sessions.mjs": "319af73225b6e2d26c342e81b98a4380e6aacf56ef60fd0363ec40b90ccaa0d1",
+    "spec-packet.mjs": "365f4471eb1cc0d5f4ac55455fcbdb13c757c97fcc6d84b830c218c865d03136",
+    "spec-workbench.mjs": "c00bb628a65fb9f045cb15b9ac448f32d44fb2a32ff5585efb03df8e710e76c8",
+    "template-placeholders.mjs": "4be00cb33d1318d4ec479894cd4a5115132b47ec417585d7c290303b0ec0fa8a",
+    "wiki.mjs": "8c9a2f891b9aa7e66dfa148bfcb5e29d46342913065eca4b3ddaeae53218caf0",
+    "workbench-layout.mjs": "8d54a7a78e68b89fb9df1b2735f97a665d487b58c6f21dcd4e2d76641911acc9",
+    "workbench-paths.mjs": "4e72814986c6da3bc3dd2e311bcba1ba9b31140e67125f7b20a95e0142f16b13"
+  },
+  "backups": []
+}

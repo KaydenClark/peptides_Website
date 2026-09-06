@@ -1,0 +1,23 @@
+# Local-only source material
+/mixing info/
+/Mixing and dose info.zip
+/private/
+# Owner reference exports containing mixing/dosing detail. Never commit.
+/catalog/
+
+# Credentials and sensitive operational data
+.env
+.env.*
+*.sqlite3
+*.db
+*.log
+
+# Generated application output
+/node_modules/
+/dist/
+/__pycache__/
+.pytest_cache/
+/.playwright-cli/
+
+# Non-catalog design concept retained locally
+/docs/design-concepts/catalog-mobile-concept.png
