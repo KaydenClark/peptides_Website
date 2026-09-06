@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,6 +10,20 @@ import { sendCatalogInquiry } from "./inquiry-action";
 
 export function generateStaticParams() {
   return catalogRecords.map((record) => ({ slug: record.slug }));
+}
+
+export async function generateMetadata(props: PageProps<"/catalog/[slug]">): Promise<Metadata> {
+  const { slug } = await props.params;
+  const record = getCatalogRecord(slug);
+
+  if (!record) {
+    return { title: "Record not found" };
+  }
+
+  return {
+    title: record.displayName,
+    description: `Informational research catalog record for ${record.displayName}. Not an offer, order, price, or medical claim.`,
+  };
 }
 
 export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug]">) {
