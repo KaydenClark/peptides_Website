@@ -108,6 +108,23 @@ h2 { font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.04; }
 .research-notice p { margin-bottom: 12px; line-height: 1.55; }
 .research-notice p:last-child { margin-bottom: 0; }
 
+.size-pills { margin: 26px 0; }
+.size-pills__label { display: block; margin-bottom: 10px; font-weight: 800; }
+.size-pills__list { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.size-pills__item { padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 700; }
+
+.inquiry-form { display: grid; gap: 16px; margin-top: 4px; }
+.inquiry-form__hint { margin: 0; color: var(--muted-ink); font-size: 0.92rem; line-height: 1.5; }
+.inquiry-form__field { display: grid; gap: 6px; }
+.inquiry-form__field label { font-weight: 800; }
+.inquiry-form__field input, .inquiry-form__field textarea { min-height: 48px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; }
+.inquiry-form__field textarea { min-height: 96px; resize: vertical; }
+.inquiry-form__submit { align-self: start; border: 0; cursor: pointer; }
+.inquiry-form__submit:disabled { cursor: not-allowed; opacity: 0.6; }
+.inquiry-form__error { margin: 0; color: #9b2226; font-weight: 700; }
+.inquiry-form__disclaimer { margin: 0; color: var(--muted-ink); font-size: 0.86rem; line-height: 1.5; }
+.inquiry-form__success p { margin: 0; font-weight: 700; }
+
 @media (min-width: 768px) {
   .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .catalog-card__content { padding: 20px; }

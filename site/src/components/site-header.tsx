@@ -70,7 +70,7 @@ export function SiteHeader() {
       <header className="site-header">
         <div className="site-header__inner">
           <Link className="wordmark" href="/">
-            Research Catalog
+            Peptide Method
           </Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {navigation.map((item) => (

@@ -5,9 +5,11 @@ const requiredFiles = [
   "src/data/catalog.ts",
   "src/components/site-header.tsx",
   "src/components/catalog-card.tsx",
+  "src/components/inquiry-form.tsx",
   "src/app/page.tsx",
   "src/app/catalog/page.tsx",
   "src/app/catalog/[slug]/page.tsx",
+  "src/app/catalog/[slug]/inquiry-action.ts",
   "public/images/research-materials/vial-master.png",
   "public/images/research-materials/vial-coral.png",
   "public/images/research-materials/vial-cerulean.png",
@@ -60,9 +62,10 @@ const requiredCopy = [
   "Tirzepatide",
   "4813.45 g/mol",
   "Vial sizes",
-  "Inventory status",
   "Research information",
-  "Inquiry is not available for this record.",
+  "Contact about this item",
+  "Send message",
+  "This is not an order, reservation, payment authorization, or commitment.",
 ];
 // Compared against a lowercased source, so every term must be lowercase.
 const prohibitedTerms = [
@@ -91,8 +94,23 @@ for (const term of prohibitedTerms) {
   }
 }
 
-if (source.includes("<form") || source.includes("fetch(")) {
-  throw new Error("TK-004 must not expose a live inquiry submission path.");
+const formGuardSource = requiredFiles
+  .filter((file) => (file.endsWith(".ts") || file.endsWith(".tsx")) && file !== "src/components/inquiry-form.tsx")
+  .map((file) => readFileSync(resolve(file), "utf8"))
+  .join("\n");
+
+if (formGuardSource.includes("<form") || source.includes("fetch(")) {
+  throw new Error("Only the reviewed TK-012 inquiry-form component may render a submission form, and no file may call fetch() directly.");
+}
+
+const inquiryFormSource = readFileSync(resolve("src/components/inquiry-form.tsx"), "utf8");
+if (!inquiryFormSource.includes("<form")) {
+  throw new Error("TK-012 inquiry form must render a real <form> tied to the reviewed server action.");
+}
+
+const inquiryActionSource = readFileSync(resolve("src/app/catalog/[slug]/inquiry-action.ts"), "utf8");
+if (!inquiryActionSource.includes('"use server"')) {
+  throw new Error("TK-012 inquiry submissions must go through a Server Action, not client-side code.");
 }
 
 const catalogPage = readFileSync(resolve("src/app/catalog/page.tsx"), "utf8");
@@ -110,4 +128,4 @@ if (recordCount !== 20) {
   throw new Error(`Catalog must list the 20 owner-reviewed inventory records, found ${recordCount}`);
 }
 
-console.log("TK-004 catalog route guard passed");
+console.log("Catalog and TK-012 inquiry-form route guard passed");

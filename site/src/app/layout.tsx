@@ -4,7 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 
 export const metadata: Metadata = {
-  title: "Research Catalog",
+  title: "Peptide Method",
   description: "A non-public research catalog for internal visual validation.",
 };
 

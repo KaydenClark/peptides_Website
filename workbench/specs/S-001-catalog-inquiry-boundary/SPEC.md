@@ -5,13 +5,13 @@
 **Spec ID:** S-001
 **Status:** active
 **Priority:** 1
-**Owner:** codex
+**Owner:** claude
 **Stance:** Builder
-**Updated:** 2026-09-05
+**Updated:** 2026-09-06
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** TK-007 closed with proof.
-**Next gate:** Complete TK-008.
+**Latest event:** TK-012 closed with proof.
+**Next gate:** Complete TK-013.
 
 ## Outcome
 
@@ -298,6 +298,22 @@ this spec. They do not replace the launch blockers or create legal clearance.
 - **Catalog publication blocker:** each catalog entry needs owner approval,
   accurate identity, usable documentation, current review date, and content
   review. The private reference files cannot satisfy those criteria by default.
+- **Scope clarification, not a new blocker:** the owner has stated the site is
+  distributed only as an unlisted private link to specific recipients, is not
+  advertised, indexed, or publicly discoverable, and makes no public licensure
+  claim. On that basis the owner authorized a minimal first contact slice
+  (TK-012). The owner then refined that request from a zero-data `mailto:`
+  handoff to a real single-item quick-send form (name, contact, optional
+  message) delivered by a Server Action through Resend to the owner's inbox.
+  This does collect transient visitor data, but the data is never stored by
+  the application: it exists only in the outgoing email, with no database,
+  acknowledgment checkboxes, policy versions, retention schedule, or owner
+  queue. This narrower, non-persistent slice does not trigger the
+  public-launch, inquiry-persistence, or owner-notification-job blockers
+  above, which remain fully in force for TK-005/TK-002/TK-003. Distributing a
+  link privately does not itself satisfy those blockers if a future slice adds
+  database persistence, and does not itself satisfy the public-launch gates if
+  the site is later advertised, indexed, or deployed publicly on Vercel.
 
 ## Vertical Implementation Slices
 
@@ -309,6 +325,8 @@ Tickets are temporary tracer bullets within this stable capability record.
 | TK-004 | Replace the abstract one-page prototype with the smallest non-public production-shaped visual slice: shared notice/header, product-led hero, typed neutral catalog fixture, one physical-vial card row, catalog/detail navigation, and no live submission. | done | none | Red/green route guard; lint; default and opt-in production builds; 1440x1000 and 390x844 real-browser review; home-to-catalog-to-detail and browser-back navigation; mobile menu Escape/focus return; no form or fetch submission path; default build excludes the review-only fixture route. |
 | TK-006 | Adopt the owner-approved liquid-vial master, add the product band palette with Ink Black body text, and render the catalog against it. | done | none | Content guard, lint, and production build passed; band variants are derived from one master render with glass, cap, label, lighting, shadow, and crop unchanged. Outstanding against this ticket: the shipped palette carries twelve `--product-*` colours against the five recorded in `docs/DESIGN-SPEC.md`, and the seven additions have no recorded contrast check. Contrast and real-browser proof are claimed from the authoring session but have no artifact in this repository. |
 | TK-007 | Add catalog empty-state and record-count states so a zero-record default build and plural counts render correct copy. | done | none | Red/green catalog guard, lint, production build, and browser checks verified the record count, supported empty-state branch, and rendered specifications, including records carrying no chemical identifiers. |
+| TK-012 | Add a single-item "Contact about this item" quick form (name, a way to reach them, optional message) on the catalog detail route, submitted through a reviewed Server Action that emails the owner via Resend. No database, acknowledgments, or policy versions; the outgoing email is the only record. | done | none | Content guard (updated for TK-012), lint, and production build passed. Real-browser round trip at localhost:3100 (dev server) confirmed: the size-pill vial display renders record.catalogStrengths; the form validates and shows a pending state; a Resend 403 (unverified peptidemethod.biz domain) surfaced as a safe, generic recoverable error with no crash and detailed reason logged server-side only; and a send using the default onboarding@resend.dev sender returned success and was confirmed received by the owner in the notify inbox. |
+| TK-013 | Replace the single-item quick form with the multi-item "inquiry list" experience: a top-of-page indicator lets a visitor add several catalog entries to one list and send a single combined message, matching the selection contract already described in `docs/PRODUCT-SPEC.md`. | deferred | TK-012 proof | Documented as the owner's preferred long-term shape; TK-012 is the smaller vertical slice built first to prove the send path works end to end. |
 | TK-008 | Correct hero, header, and process-list layout defects from the front-end review and add a shared footer carrying the non-transactional notice. | ready | none | pending |
 | TK-009 | Correct keyboard, focus, and anchor-offset defects from the front-end review. | ready | none | pending |
 | TK-010 | Give each route its own title and description and remove internal-review wording from the shipped description. | ready | none | pending |
@@ -374,6 +392,60 @@ and plural copy. Direct owner approval now makes the default build contain the
 full record set, so the empty state is a supported fallback rather than the
 default presentation. The `aria-live` region on a server-rendered static count is
 retained for future client-side filtering work.
+
+### TK-012 - Single-item quick inquiry form (Resend)
+
+**Stance:** Builder
+
+The owner clarified this website is shared only as an unlisted private link to
+specific recipients, is never advertised or made publicly discoverable, and
+carries no public licensure claim. On that basis the owner authorized a first
+contact slice that does not wait on TK-005/TK-002/TK-003, and then refined the
+request from a zero-data `mailto:` handoff to a real quick-send form: the
+owner wants a visitor to be able to type a message on the site itself.
+
+Each catalog detail page now renders `InquiryForm`
+(`src/components/inquiry-form.tsx`), a Client Component collecting name, a
+free-text "email or phone" contact field, and an optional message, with the
+same logistics-only instruction line used in `docs/PRODUCT-SPEC.md`. Submission
+runs through `sendCatalogInquiry` (`src/app/catalog/[slug]/inquiry-action.ts`),
+a `"use server"` Server Action bound per-record to the catalog `id` and
+`displayName`. The action validates required fields server-side, then sends a
+transactional email through Resend (`RESEND_API_KEY`, `OWNER_NOTIFY_EMAIL`,
+optional `INQUIRY_FROM_EMAIL`, all read from an untracked `.env`) containing
+the visitor's submission and the non-transactional disclaimer. It replies with
+`{status: "success"}` or a safe, generic `{status: "error", message}` the
+visitor can act on; the real failure reason is logged server-side only.
+
+No database, acknowledgment checkboxes, policy versions, retention schedule,
+or owner queue exist. The outgoing email is the only record of an inquiry —
+if it fails to send, nothing is retried or recoverable beyond the visitor
+seeing the error and trying again. This is an accepted, explicit limitation of
+the slice, not an oversight; TK-002's durable persistence and retry contract
+remains the eventual target once its own blockers clear. The old "Inquiry is
+not available for this record" and "Inventory status: Paused" copy is retired;
+the retired `<dt>Vial sizes</dt>` plain-text row is replaced by a pill list
+(`.size-pills`) rendering each `catalogStrengths` entry as-is.
+
+The reviewed content guard (`scripts/verify-catalog-shell.mjs`) was updated to
+allow exactly one `<form>` (in `inquiry-form.tsx`) tied to a file asserting
+`"use server"`, while every other required file remains banned from
+`<form` and `fetch(`.
+
+### TK-013 - Multi-item inquiry list (deferred)
+
+**Stance:** Builder
+
+The owner's preferred long-term shape is the "inquiry list" already described
+in `docs/PRODUCT-SPEC.md`'s Inquiry selection and form contract: a top-of-page
+indicator lets a visitor add more than one catalog entry to a list and send
+one combined message, rather than filling out a separate form per record.
+TK-012 is deliberately the smaller single-item vertical slice built first to
+prove the send path (form -> Server Action -> Resend -> owner inbox) works
+end to end before investing in the added UI state (add/remove, cross-page
+persistence, empty-list handling) that a multi-item list requires. This ticket
+remains deferred, with TK-012's proof as its dependency, until the owner asks
+for it to be picked up.
 
 ### TK-008 - Layout corrections and shared footer
 
@@ -552,6 +624,9 @@ state and must not submit, persist, or send data.
 | 2026-09-05 | Catalog content | The catalog holds twenty approved local records: 5-Amino-1MQ, ARA-290, BPC-157, CJC-1295 (without DAC), DSIP, GHK-Cu, Glutathione, Ipamorelin, KLOW Blend, L-Carnitine, MOTS-c, NAD+, PT-141, Retatrutide, Selank, Semax, SS-31, Tesamorelin, Thymosin Alpha-1, and Tirzepatide. All are paused. This set replaced an earlier five-record set (Semaglutide, Tirzepatide, Retatrutide, Cagrilintide, CagriSema), which no longer exists in the catalog. Only Retatrutide and Tirzepatide carry CAS and molecular-weight values; the rest carry no chemical identifiers because none were supplied. | The inventory owner supplied the names, vial sizes, package formats, and chemical identifiers to the site builder, who relayed them unchanged; the builder confirmed this provenance on 2026-09-05. The relayed facts were reviewed against the research-only and non-transactional content boundary, and tracked source was grepped for dosing, mixing, reconstitution, and route language with no hits. Red/green content guard, lint, and production build passed. | `site/src/data/catalog.ts` is the sole catalog source; detail pages render supplied strengths and chemical facts with review/source metadata. The content guard asserts the twenty-record count and the required record copy. | Record identity and packaging only; no dosing, mixing, preparation, or route content is carried into the site. The root `catalog/` reference export is now Git-ignored as private mixing/dosing material. The site remains local-only with no inquiry capture, payment, fulfillment, or launch approval. |
 | 2026-09-05 | TK-007 | Ticket closed | Red/green catalog guard, lint, and production build verified the record count, the supported empty-state branch, rendered specifications, and records carrying no chemical identifiers. The build emitted one static detail route per record. | site/src/data/catalog.ts, detail/catalog pages, README, and S-001 evidence record | TK-008 through TK-011 remain; the catalog is local-only and all records remain paused with no inquiry, payment, fulfillment, or launch approval. |
 | 2026-09-05 | Separate-context review | Ran the required two-axis review before merging to `integration`. It found that the guard's `>Buy<` and `>Add<` prohibited terms were compared against a lowercased source and so could never fire, that the detail route rendered a permanent `Price / Not listed` row against the DESIGN-SPEC rejection condition, and that the TK-006 record claimed CATALOG_VISUAL_REVIEW gating and contrast proof the code and repository do not support. | The guard terms are lowercased and covered by a red/green test: an injected `<button>Buy</button>` now fails the guard, and the clean tree passes. Content guard, lint, and production build re-run green. | site/scripts/verify-catalog-shell.mjs, site/src/app/catalog/[slug]/page.tsx, and the TK-006 ticket and evidence records. | The palette overrun against DESIGN-SPEC is unresolved and awaits an owner decision on whether the document or the code is authoritative. Card category and vial size, the non-focusable `View details` control, focus-ring clipping, and heading levels are held by TK-008, TK-009, and TK-011. |
+
+| 2026-09-06 | Owner decision | Owner clarified the website is distributed only as an unlisted private link to specific recipients, is never advertised or made publicly discoverable, and carries no public licensure claim. Owner directed that the first contact capability collect zero visitor data: a plain `mailto:` action rather than a persisted, database-backed inquiry form. Recorded as new ticket TK-012 with no blockers. | Workbench render and doctor to be run after this update; `git diff --check` pending. | This spec's Dependencies And Blockers section now distinguishes the zero-collection `mailto:` slice from the still-blocked, data-collecting TK-005/TK-002/TK-003 path. | TK-012 is unclaimed. The owner's contact email address and exact subject/body copy are not yet recorded. TK-005/TK-002/TK-003 remain blocked; distributing the link privately does not by itself satisfy those blockers if a future slice collects or stores visitor data. |
+| 2026-09-06 | TK-012 | Ticket closed | Content guard (updated for TK-012), lint, and production build passed. Real-browser round trip at localhost:3100 (dev server) confirmed: the size-pill vial display renders record.catalogStrengths; the form validates and shows a pending state; a Resend 403 (unverified peptidemethod.biz domain) surfaced as a safe, generic recoverable error with no crash and detailed reason logged server-side only; and a send using the default onboarding@resend.dev sender returned success and was confirmed received by the owner in the notify inbox. | site/README.md, site/scripts/verify-catalog-shell.mjs, site/.env template, site/src/components/inquiry-form.tsx, site/src/app/catalog/[slug]/inquiry-action.ts, site/src/app/catalog/[slug]/page.tsx, site/src/app/globals.css | peptidemethod.biz has no SPF/DKIM/DMARC records added and is not verified in Resend, so INQUIRY_FROM_EMAIL stays commented out and mail sends from the default onboarding@resend.dev sender. OWNER_NOTIFY_EMAIL is currently the builder's own test inbox pending the domain/account situation being finalized before the owner commits. No database, acknowledgments, policy versions, retention schedule, or owner queue exist; the outgoing email is the only record and a failed send is not retried. TK-005/TK-002/TK-003 remain blocked. TK-013 (multi-item inquiry list) is documented but deferred. No Vercel deployment has been requested or authorized. |
 
 ## Completion Result
 

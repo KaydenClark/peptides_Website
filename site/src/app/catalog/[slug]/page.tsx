@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { InquiryForm } from "@/components/inquiry-form";
 import { catalogRecords, getCatalogRecord } from "@/data/catalog";
+
+import { sendCatalogInquiry } from "./inquiry-action";
 
 export function generateStaticParams() {
   return catalogRecords.map((record) => ({ slug: record.slug }));
@@ -35,12 +38,18 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
           <p className="page-lead">{record.summary}</p>
           <dl className="specification-list">
             <div><dt>Product name</dt><dd>{record.displayName}</dd></div>
-            <div><dt>Vial sizes</dt><dd>{record.catalogStrengths.join(", ")}</dd></div>
-            <div><dt>Inventory status</dt><dd>Paused &mdash; not currently open for inquiries</dd></div>
             {record.price ? (
               <div><dt>Price</dt><dd>{record.price}</dd></div>
             ) : null}
           </dl>
+          <div className="size-pills">
+            <span className="size-pills__label">Vial sizes</span>
+            <ul className="size-pills__list">
+              {record.catalogStrengths.map((strength) => (
+                <li className="size-pills__item" key={strength}>{strength}</li>
+              ))}
+            </ul>
+          </div>
           <section className="research-notice" aria-labelledby="research-info-title">
             <h2 id="research-info-title">Research information</h2>
             {record.specifications.length > 0 ? (
@@ -62,9 +71,8 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
             )}
           </section>
           <section className="research-notice" aria-labelledby="inquiry-status-title">
-            <h2 id="inquiry-status-title">Inquiry status</h2>
-            <p>Inquiry is not available for this record.</p>
-            <p>Viewing a record does not create an order, reservation, payment authorization, or commitment.</p>
+            <h2 id="inquiry-status-title">Contact about this item</h2>
+            <InquiryForm action={sendCatalogInquiry.bind(null, record.id, record.displayName)} />
           </section>
         </div>
       </div>
