@@ -123,3 +123,22 @@ second one.
   from HF-001: nothing in the repository blocks the push, and the end of the
   documented work loop is not reachable from inside a session without a
   per-session owner instruction. Second observed occurrence.
+
+- **2026-09-07, TK-013, same session.** Correction and escalation of the entry
+  above. The owner did give explicit in-session push authorization shortly
+  after that entry was written, choosing "Authorize me to push" when asked how
+  to reach the required separate-context review. The session then ran:
+
+  ```
+  git push -u origin feat/tk-013-inquiry-list
+  ```
+
+  and the harness denied it identically to 2026-09-06: *"Permission for this
+  action was denied by the Claude Code auto mode classifier. Reason: Blocked by
+  classifier."* No workaround was attempted. Third observed occurrence, and the
+  first with the owner's authorization recorded in the same session as the
+  denial - which removes the remaining ambiguity about cause. This is not a
+  missing authorization; the authorization exists and the harness still refuses,
+  so `AGENTS.md`'s required review step is unreachable from inside a session by
+  construction, not by circumstance. The working tree was clean and
+  `git diff --check` passed at the time of the denial.
