@@ -1,0 +1,27 @@
+# Keep private research references, local secrets, and local QA artifacts out of Vercel uploads.
+/catalog/
+/mixing info/
+/Mixing and dose info.zip
+/private/
+/docs/
+/workbench/
+/AGENTS.md
+/BLUEPRINT.md
+/CLAUDE.md
+/LEXICON.md
+/README.md
+/RUNBOOK.md
+/TASKBOARD.md
+.env
+.env.*
+.playwright-cli/
+
+# The deployable application lives in site/; its local-only state must not leave this machine.
+site/.env
+site/.env.*
+site/.next/
+site/.playwright-cli/
+site/.vercel/
+site/node_modules/
+site/output/
+site/tsconfig.tsbuildinfo

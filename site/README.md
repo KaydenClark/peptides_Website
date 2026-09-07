@@ -1,6 +1,6 @@
 # Peptide Method
 
-Local-only Next.js catalog for twenty owner-reviewed research-material records.
+Private Vercel-demo Next.js catalog for twenty owner-reviewed research-material records.
 Each catalog detail page has a single-item "Contact about this item" form
 (TK-012) that emails the owner through Resend; nothing is stored by the
 application. No database, acknowledgments, policy versions, or owner queue
@@ -27,6 +27,14 @@ Copy `.env` and fill in:
   unset until the sending domain shows "Verified" at
   [resend.com/domains](https://resend.com/domains); until then sends fall back
   to `onboarding@resend.dev`.
+
+## Vercel demo
+
+Set `RESEND_API_KEY` and `OWNER_NOTIFY_EMAIL` as server-only **Production**
+environment variables in the Vercel project, then redeploy. Do not use
+`NEXT_PUBLIC_` for either value, and do not commit local `.env` files. The
+root `.vercelignore` prevents local secrets and private reference material from
+being uploaded by CLI deployments.
 
 ## Verify
 
