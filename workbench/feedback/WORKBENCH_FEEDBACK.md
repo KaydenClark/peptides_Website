@@ -107,3 +107,19 @@ already told no.
   is not evidence that the harness issue was resolved.
 - Whatever is decided, record it in `RUNBOOK.md` under version control so the
   expected end of the work loop is unambiguous for future sessions.
+
+### Recurrence log
+
+Appended as occurrences happen, so HF-001 carries frequency rather than a
+single anecdote. This is the existing record for the problem; do not open a
+second one.
+
+- **2026-09-07, TK-013.** The work loop again ended one step short. The slice
+  was built, verified, and committed on `feat/tk-013-inquiry-list`, but
+  `AGENTS.md` requires a separate-context review before the branch merges to
+  `integration`, and requesting that review means publishing the branch. Push
+  authorization is per-session and was not given this session, so the session
+  had to stop and hand the coordination back to the owner. Cause is unchanged
+  from HF-001: nothing in the repository blocks the push, and the end of the
+  documented work loop is not reachable from inside a session without a
+  per-session owner instruction. Second observed occurrence.
