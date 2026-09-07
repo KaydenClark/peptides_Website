@@ -7,11 +7,11 @@
 **Priority:** 1
 **Owner:** claude
 **Stance:** Builder
-**Updated:** 2026-09-06
+**Updated:** 2026-09-07
 **Catalog description:** Defines a non-transactional catalog and private owner-reviewed inquiry workflow for research-material entries.
 **Blockers:** Public release and any live inquiry endpoint require qualified legal review, approved policies, security design, and host-policy confirmation.
-**Latest event:** TK-011 closed with proof.
-**Next gate:** Complete TK-013.
+**Latest event:** TK-013 closed with proof.
+**Next gate:** Separate-context review of `feat/tk-013-inquiry-list` before it merges to `integration`; the TK-005/TK-002/TK-003 path stays blocked.
 
 ## Outcome
 
@@ -304,7 +304,10 @@ this spec. They do not replace the launch blockers or create legal clearance.
   claim. On that basis the owner authorized a minimal first contact slice
   (TK-012). The owner then refined that request from a zero-data `mailto:`
   handoff to a real single-item quick-send form (name, contact, optional
-  message) delivered by a Server Action through Resend to the owner's inbox.
+  message) delivered by a Server Action through Resend to the owner's inbox,
+  and then, in TK-013, to a multi-record inquiry list that sends one combined
+  message with the same three fields. The selection itself is temporary
+  browser context that never reaches the server until the visitor submits.
   This does collect transient visitor data, but the data is never stored by
   the application: it exists only in the outgoing email, with no database,
   acknowledgment checkboxes, policy versions, retention schedule, or owner
@@ -326,7 +329,7 @@ Tickets are temporary tracer bullets within this stable capability record.
 | TK-006 | Adopt the owner-approved liquid-vial master, add the product band palette with Ink Black body text, and render the catalog against it. | done | none | Content guard, lint, and production build passed; band variants are derived from one master render with glass, cap, label, lighting, shadow, and crop unchanged. Outstanding against this ticket: the shipped palette carries twelve `--product-*` colours against the five recorded in `docs/DESIGN-SPEC.md`, and the seven additions have no recorded contrast check. Contrast and real-browser proof are claimed from the authoring session but have no artifact in this repository. |
 | TK-007 | Add catalog empty-state and record-count states so a zero-record default build and plural counts render correct copy. | done | none | Red/green catalog guard, lint, production build, and browser checks verified the record count, supported empty-state branch, and rendered specifications, including records carrying no chemical identifiers. |
 | TK-012 | Add a single-item "Contact about this item" quick form (name, a way to reach them, optional message) on the catalog detail route, submitted through a reviewed Server Action that emails the owner via Resend. No database, acknowledgments, or policy versions; the outgoing email is the only record. | done | none | Content guard (updated for TK-012), lint, and production build passed. Real-browser round trip at localhost:3100 (dev server) confirmed: the size-pill vial display renders record.catalogStrengths; the form validates and shows a pending state; a Resend 403 (unverified peptidemethod.biz domain) surfaced as a safe, generic recoverable error with no crash and detailed reason logged server-side only; and a send using the default onboarding@resend.dev sender returned success and was confirmed received by the owner in the notify inbox. |
-| TK-013 | Replace the single-item quick form with the multi-item "inquiry list" experience: a top-of-page indicator lets a visitor add several catalog entries to one list and send a single combined message, matching the selection contract already described in `docs/PRODUCT-SPEC.md`. | deferred | TK-012 proof | Documented as the owner's preferred long-term shape; TK-012 is the smaller vertical slice built first to prove the send path works end to end. |
+| TK-013 | Replace the single-item quick form with the multi-item "inquiry list" experience: a top-of-page indicator lets a visitor add several catalog entries to one list and send a single combined message, matching the selection contract already described in `docs/PRODUCT-SPEC.md`. | done | none | Red/green content guard (rewritten for TK-013), lint, and production build passed; the build now generates 26 routes including the new `/inquiry`. Real-browser verification at localhost:3100 confirmed: adding from a catalog card does not trigger the card's stretched record link, selection survives navigation between `/catalog` and a detail route via sessionStorage, the header indicator appears only after the first selection and announces "1 record selected" / "2 records selected", removing every entry restores the empty state and clears the indicator, and both 1440x1000 and 390x844 render with no horizontal overflow and 44px-or-larger touch targets. Server-side rejection was proved twice through the real form: whitespace-only name and contact passed the HTML `required` attribute and were rejected by the Server Action, and three forged record ids submitted with a valid name were rejected before any send because the action re-derives every record through `getCatalogRecord`. The live combined send was then authorized by the owner and proved end to end: two records selected across two detail routes, one combined message submitted through the real form, `POST /inquiry 200` with no server-side error, success state rendered, and the list cleared. |
 | TK-008 | Correct hero, header, and process-list layout defects from the front-end review and add a shared footer carrying the non-transactional notice. | done | none | Content guard, lint, and production build passed. Real-browser verification at 390x844 and 1440x1000 confirmed all four measured defects: computed styles showed the hero h1-to-paragraph gap was exactly 0px before the fix and is now 20px via .hero__copy h1 margin-bottom; at 390px the header wordmark and Browse-catalog button no longer wrap (the button is hidden below 640px since the mobile menu already repeats it, and the wordmark got white-space: nowrap); the ordered process list now renders visible 1/2/3 markers after restoring list-style-type: decimal (Tailwind's preflight had zeroed it); and the home catalog-preview grid (6 records) was measured at exactly 3 columns at 1440px, producing two even rows instead of stranding the sixth record alone under the full catalog page's 5-column breakpoint. A new SiteFooter component now renders on every route (verified present via querySelector on both / and /catalog) with the wordmark, Catalog/How-it-works links, and the non-transactional notice. |
 | TK-009 | Correct keyboard, focus, and anchor-offset defects from the front-end review. | done | none | Separate-context two-axis review APPROVED. On merged integration: eslint clean, content guard (npm test) passed, and the default Turbopack production build generated all 25 routes. Skip link now moves focus: main#main-content carries tabIndex=-1 with #main-content:focus outline suppressed for the non-interactive landmark. html scroll-padding-top:88px reserves offset so #how-it-works and the skip target clear the 64/80px sticky header. The mobile menu backdrop dismisses via an event.target===currentTarget guard on .menu-overlay; Escape, focus trap, focus return, and body scroll-lock unchanged. Catalog-card focus ring verified NOT clipped and needs no edit: the existing :has() ring paints on .catalog-card itself and an element's own overflow:hidden cannot clip its own outline, and no ancestor clips it. |
 | TK-010 | Give each route its own title and description and remove internal-review wording from the shipped description. | done | none | Separate-context review APPROVED. On merged integration: eslint clean, content guard passed, Turbopack build generated all routes. Per-route <title> confirmed from built HTML: / -> Peptide Method, /catalog -> Catalog / Peptide Method, /catalog/bpc-157 -> BPC-157 / Peptide Method, via the layout title template plus a static catalog metadata export and an async generateMetadata on the detail route. The shipped default description no longer contains internal-review wording (internal visual validation removed). No price, quantity, availability, or efficacy/quality claim appears in any route metadata. |
@@ -432,20 +435,77 @@ allow exactly one `<form>` (in `inquiry-form.tsx`) tied to a file asserting
 `"use server"`, while every other required file remains banned from
 `<form` and `fetch(`.
 
-### TK-013 - Multi-item inquiry list (deferred)
+### TK-013 - Multi-item inquiry list
 
 **Stance:** Builder
 
-The owner's preferred long-term shape is the "inquiry list" already described
-in `docs/PRODUCT-SPEC.md`'s Inquiry selection and form contract: a top-of-page
-indicator lets a visitor add more than one catalog entry to a list and send
-one combined message, rather than filling out a separate form per record.
-TK-012 is deliberately the smaller single-item vertical slice built first to
-prove the send path (form -> Server Action -> Resend -> owner inbox) works
-end to end before investing in the added UI state (add/remove, cross-page
-persistence, empty-list handling) that a multi-item list requires. This ticket
-remains deferred, with TK-012's proof as its dependency, until the owner asks
-for it to be picked up.
+Completed 2026-09-07. The ticket was deferred only until the owner asked for it
+to be picked up; the owner asked, and TK-012's send-path proof - its stated
+dependency - was already recorded. `docs/PRODUCT-SPEC.md` reserved the name
+`inquiry list` for the case where multiple entries are explicitly approved, so
+that approval is what this ticket records: the plural list is now the shipped
+shape and the singular per-record form is retired.
+
+Selection lives in `InquiryListProvider` (`src/components/inquiry-list-provider.tsx`),
+a Client Component holding an ordered set of catalog slugs in `sessionStorage`
+under `peptide-method.inquiry-list`, capped at twenty entries. It is read
+through `useSyncExternalStore` rather than an effect, so the server render and
+the hydration pass both see an empty list and React re-renders once with the
+real selection; a blocked or corrupt store degrades to an empty list rather
+than an error. The selection is temporary browser context only, exactly as the
+product contract requires: it clears with the tab, never reaches the server
+until the visitor submits, and carries no amount, price, total, or timer.
+
+`InquiryToggle` (`src/components/inquiry-toggle.tsx`) is the two-state
+add/remove control, rendered on every catalog card and in the detail route's
+contact panel. It has no numeric input by construction and the guard enforces
+that. On a card it needs `position: relative; z-index: 2` to sit above the
+`.catalog-card__link::after` overlay that stretches the record link across the
+whole card, so choosing a record does not navigate away from the catalog.
+
+`SiteHeader` carries the top-of-page indicator inside a reserved
+`aria-live="polite"` slot, so the count appearing does not reflow the bar. The
+indicator stays hidden until the first selection, keeping catalog discovery
+primary as `docs/DESIGN-SPEC.md` requires, and it links to `/inquiry`.
+
+`/inquiry` (`src/app/inquiry/page.tsx`) is a Server Component that passes the
+slug and display-name pairs for the whole catalog to `InquiryListForm`
+(`src/components/inquiry-list-form.tsx`), which renders the selected records
+with per-entry remove controls, one hidden `slug` field each, and the single
+name / contact / optional-message field set carried over unchanged from
+TK-012. It renders a loading line before hydration so it shows neither an
+empty state nor a form that would post an empty selection, and it clears the
+list after a successful send. The page lead is worded to read correctly
+whether or not anything is selected, because the list state is client-only.
+
+`sendInquiryList` (`src/app/inquiry/inquiry-action.ts`) is the `"use server"`
+action. It never trusts the submitted identifiers: each slug is re-derived
+through `getCatalogRecord`, unknown ids are dropped, and a submission that
+resolves to zero records is rejected before any mail is attempted. It then
+sends one combined email naming every resolved record through the same Resend
+configuration TK-012 proved (`RESEND_API_KEY`, `OWNER_NOTIFY_EMAIL`, optional
+`INQUIRY_FROM_EMAIL`), with the same safe and generic error contract and
+server-only logging of the real failure reason.
+
+The field set is deliberately unchanged from TK-012. The product contract's
+country/state jurisdiction screening, organization field, five required
+acknowledgments, and exact policy versions belong to TK-005/TK-002/TK-003,
+which remain blocked; adding them here would collect more visitor data and
+assert policy versions that do not exist. The confirmation copy likewise stays
+TK-012's "Message sent. The owner will contact you directly." rather than the
+product contract's "Your inquiry has been received", because that wording is
+tied to durable acceptance and this slice still has no database. The outgoing
+email remains the only record, and a failed send is not retried.
+
+The reviewed content guard was rewritten from the TK-012 shape to the TK-013
+shape: it now requires the provider, toggle, list form, `/inquiry` route and
+its action; requires the "Inquiry list", "Add to inquiry list", "Remove from
+inquiry list", "Your inquiry list is empty." and "Send inquiry" copy; bans
+`cart`, `quantity`, `subtotal`, and `localstorage` alongside the existing
+prohibited terms; allows exactly one `<form>` (in `inquiry-list-form.tsx`);
+and asserts that the action calls `getCatalogRecord`, that the provider uses
+`sessionStorage`, and that the selection control carries no `value=`,
+`type="number"`, or `step=` amount input.
 
 ### TK-008 - Layout corrections and shared footer
 
@@ -631,6 +691,11 @@ state and must not submit, persist, or send data.
 | 2026-09-06 | TK-009 | Ticket closed | Separate-context two-axis review APPROVED. On merged integration: eslint clean, content guard (npm test) passed, and the default Turbopack production build generated all 25 routes. Skip link now moves focus: main#main-content carries tabIndex=-1 with #main-content:focus outline suppressed for the non-interactive landmark. html scroll-padding-top:88px reserves offset so #how-it-works and the skip target clear the 64/80px sticky header. The mobile menu backdrop dismisses via an event.target===currentTarget guard on .menu-overlay; Escape, focus trap, focus return, and body scroll-lock unchanged. Catalog-card focus ring verified NOT clipped and needs no edit: the existing :has() ring paints on .catalog-card itself and an element's own overflow:hidden cannot clip its own outline, and no ancestor clips it. | site/src/app/layout.tsx, site/src/app/globals.css, site/src/components/site-header.tsx, workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md | TK-010 and TK-011 are merged in the same pass and closed next. Site stays local-only; all records paused; no inquiry persistence, legal, or host approval. The focus-ring slice is closed by verification rather than a code change. |
 | 2026-09-06 | TK-010 | Ticket closed | Separate-context review APPROVED. On merged integration: eslint clean, content guard passed, Turbopack build generated all routes. Per-route <title> confirmed from built HTML: / -> Peptide Method, /catalog -> Catalog / Peptide Method, /catalog/bpc-157 -> BPC-157 / Peptide Method, via the layout title template plus a static catalog metadata export and an async generateMetadata on the detail route. The shipped default description no longer contains internal-review wording (internal visual validation removed). No price, quantity, availability, or efficacy/quality claim appears in any route metadata. | site/src/app/layout.tsx, site/src/app/catalog/page.tsx, site/src/app/catalog/[slug]/page.tsx, workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md | TK-011 is merged in the same pass and closed next. Detail metadata intentionally includes the owner-reviewed display name (already rendered on-page) but no status, price, or claim. Site remains local-only and paused. |
 | 2026-09-06 | TK-011 | Ticket closed | Separate-context review APPROVED. On merged integration: eslint clean, content guard passed, Turbopack build generated all routes. The redundant header Browse-catalog link was removed from both the desktop bar and the mobile menu (with its orphaned CSS), cutting the home route /catalog targets from four to three (desktop-nav Catalog, hero CTA, preview CTA) while /catalog stays reachable at every breakpoint. Catalog card titles now render via a headingLevel prop: h3 under the home preview h2 (outline h1 h2 h3) and the default h2 under the /catalog page h1 (outline h1 h2); .catalog-card__title gained explicit serif font, weight, letter-spacing, and margin-top so an h3 renders identically to the former h2. Required copy Browse the catalog and View details preserved. | site/src/components/site-header.tsx, site/src/app/globals.css, site/src/components/catalog-card.tsx, site/src/app/page.tsx, workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md | All three front-end review tickets (TK-009/010/011) are now closed. Next gate is TK-013 (multi-item inquiry list), which remains deferred behind TK-012 proof. Site stays local-only, records paused, no inquiry persistence, legal, or host approval. |
+| 2026-09-06 | Owner-authorized Vercel demo email | The owner authorized a Vercel demo with the existing Resend notification path. Production environment secrets `RESEND_API_KEY` and `OWNER_NOTIFY_EMAIL` were configured as server-only values; a fresh Production deployment became READY and alias `https://peptidemethod.vercel.app` was updated. A real-browser submission on `/catalog/bpc-157` returned the rendered success state after sending a neutral test inquiry to the configured owner inbox. | `.vercelignore` excludes local secrets, private reference folders, Workbench content, and QA artifacts from CLI deployment uploads; `site/README.md` documents the required Vercel configuration. Local route guard, lint, production build, Vercel build, deployment inspection, and deployed browser form flow passed. | The default Vercel alias was reachable without a login during the browser check; unlisted sharing is not access control. This demo does not satisfy the existing publication, privacy, legal, security, storage, retention, rate-limit, or owner-operations gates. |
+
+| 2026-09-07 | TK-013 | Ticket closed | Red/green proof: the reviewed content guard was rewritten to the TK-013 shape and run first, failing on the missing provider; after implementation the guard, eslint, and the Turbopack production build all passed, generating 26 routes including the new `/inquiry`. Real-browser verification at localhost:3100 confirmed the whole selection loop: choosing a record from a catalog card does not fire the card's stretched record link, a selection made on a detail route and one made on the catalog page accumulate into the same list (`["bpc-157","5-amino-1mq"]` in sessionStorage), the header indicator appears only after the first selection and announces "1 record selected" then "2 records selected", `/inquiry` lists every selected record with its own remove control, and removing all of them restores the empty state, clears the indicator, and leaves sessionStorage at `[]`. Server-side rejection was proved twice through the real form rather than by inspection: whitespace-only name and contact satisfied the HTML `required` attribute and were still rejected by the Server Action with "Enter your name and a way to reach you.", and three forged record ids submitted alongside a valid name and contact were rejected with "Add at least one record to your inquiry list first." because the action re-derives every record through `getCatalogRecord`. Layout was measured at 1440x1000 and 390x844: no horizontal overflow at either width, the header does not overflow or wrap at 390px with the indicator present, and the indicator, card toggle, and remove controls all measure 44px or taller. No console errors on any route. | site/src/components/inquiry-list-provider.tsx, site/src/components/inquiry-toggle.tsx, site/src/components/inquiry-list-form.tsx, site/src/app/inquiry/page.tsx, site/src/app/inquiry/inquiry-action.ts, site/src/components/site-header.tsx, site/src/components/catalog-card.tsx, site/src/app/catalog/[slug]/page.tsx, site/src/app/layout.tsx, site/src/app/globals.css, site/scripts/verify-catalog-shell.mjs, site/README.md, docs/PRODUCT-SPEC.md, workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md | The live combined Resend send was not exercised at the time this row was written, because sending real mail is an outward-facing action and TK-012's authorization covered only the single-item send. The owner authorized it immediately afterwards and it passed; see the following ledger row. The deleted TK-012 files (`site/src/components/inquiry-form.tsx`, `site/src/app/catalog/[slug]/inquiry-action.ts`) are superseded, not lost - they remain in history. Naming multiple entries an `inquiry list` is now owner-approved, which `docs/PRODUCT-SPEC.md` had reserved for exactly this approval. Still absent by design: database, acknowledgments, policy versions, jurisdiction screening, retention schedule, owner queue, retry. TK-005/TK-002/TK-003 and every public-launch blocker remain in force, and no deployment of this slice has been requested or authorized. |
+
+| 2026-09-07 | TK-013 | Live combined send proved | The owner authorized the live end-to-end test that the preceding row left open, and it passed. Two records were selected across two different detail routes (`5-Amino-1MQ`, `ARA-290`; sessionStorage `["5-amino-1mq","ara-290"]`) and one combined message was submitted through the real `/inquiry` form with a neutral test name, a reserved `example.com` contact address, and a logistics-only body. The dev server logged `POST /inquiry 200` with `sendInquiryList` completing in 171ms and no server-side error; the action logs every Resend failure through `console.error`, so a silent failure would have appeared there. The browser rendered the success state ("Message sent. The owner will contact you directly.") with the non-transactional disclaimer, the inquiry list cleared itself to `[]`, and the header indicator disappeared. | workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md | This supersedes the preceding row's open limitation: the multi-record send path is now proved end to end, not only up to the Resend boundary. The only console errors were dev-server HMR WebSocket failures, unrelated to the application. Delivery was confirmed by the owner, who reported receiving the combined test message, so this is inbox-confirmed rather than inferred from the Resend accept alone. Everything else the preceding row records as absent by design remains absent. |
 
 ## Completion Result
 

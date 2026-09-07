@@ -5,11 +5,14 @@ const requiredFiles = [
   "src/data/catalog.ts",
   "src/components/site-header.tsx",
   "src/components/catalog-card.tsx",
-  "src/components/inquiry-form.tsx",
+  "src/components/inquiry-list-provider.tsx",
+  "src/components/inquiry-toggle.tsx",
+  "src/components/inquiry-list-form.tsx",
   "src/app/page.tsx",
   "src/app/catalog/page.tsx",
   "src/app/catalog/[slug]/page.tsx",
-  "src/app/catalog/[slug]/inquiry-action.ts",
+  "src/app/inquiry/page.tsx",
+  "src/app/inquiry/inquiry-action.ts",
   "public/images/research-materials/vial-master.png",
   "public/images/research-materials/vial-coral.png",
   "public/images/research-materials/vial-cerulean.png",
@@ -63,8 +66,11 @@ const requiredCopy = [
   "4813.45 g/mol",
   "Vial sizes",
   "Research information",
-  "Contact about this item",
-  "Send message",
+  "Inquiry list",
+  "Add to inquiry list",
+  "Remove from inquiry list",
+  "Your inquiry list is empty.",
+  "Send inquiry",
   "This is not an order, reservation, payment authorization, or commitment.",
 ];
 // Compared against a lowercased source, so every term must be lowercase.
@@ -76,6 +82,10 @@ const prohibitedTerms = [
   "dosing",
   "administration",
   "weight-loss",
+  "cart",
+  "quantity",
+  "subtotal",
+  "localstorage",
   "prototype",
   "placeholder",
   "illustrative",
@@ -95,23 +105,45 @@ for (const term of prohibitedTerms) {
 }
 
 const formGuardSource = requiredFiles
-  .filter((file) => (file.endsWith(".ts") || file.endsWith(".tsx")) && file !== "src/components/inquiry-form.tsx")
+  .filter((file) => (file.endsWith(".ts") || file.endsWith(".tsx")) && file !== "src/components/inquiry-list-form.tsx")
   .map((file) => readFileSync(resolve(file), "utf8"))
   .join("\n");
 
 if (formGuardSource.includes("<form") || source.includes("fetch(")) {
-  throw new Error("Only the reviewed TK-012 inquiry-form component may render a submission form, and no file may call fetch() directly.");
+  throw new Error("Only the reviewed TK-013 inquiry-list-form component may render a submission form, and no file may call fetch() directly.");
 }
 
-const inquiryFormSource = readFileSync(resolve("src/components/inquiry-form.tsx"), "utf8");
+const inquiryFormSource = readFileSync(resolve("src/components/inquiry-list-form.tsx"), "utf8");
 if (!inquiryFormSource.includes("<form")) {
-  throw new Error("TK-012 inquiry form must render a real <form> tied to the reviewed server action.");
+  throw new Error("TK-013 inquiry list form must render a real <form> tied to the reviewed server action.");
 }
 
-const inquiryActionSource = readFileSync(resolve("src/app/catalog/[slug]/inquiry-action.ts"), "utf8");
+const inquiryActionSource = readFileSync(resolve("src/app/inquiry/inquiry-action.ts"), "utf8");
 if (!inquiryActionSource.includes('"use server"')) {
-  throw new Error("TK-012 inquiry submissions must go through a Server Action, not client-side code.");
+  throw new Error("TK-013 inquiry submissions must go through a Server Action, not client-side code.");
 }
+
+// TK-013: the server re-derives every selected record from the catalog module
+// rather than trusting the identifiers the browser submitted.
+if (!inquiryActionSource.includes("getCatalogRecord")) {
+  throw new Error("TK-013 server action must revalidate submitted record ids against the catalog.");
+}
+
+// TK-013: selection is temporary browser context only. sessionStorage clears
+// with the tab; localStorage would outlive it and is banned above.
+const providerSource = readFileSync(resolve("src/components/inquiry-list-provider.tsx"), "utf8");
+if (!providerSource.includes("sessionStorage")) {
+  throw new Error("TK-013 inquiry list selection must be temporary browser context (sessionStorage).");
+}
+
+// TK-013: the list is a set of records to discuss, never a counted basket.
+const toggleSource = readFileSync(resolve("src/components/inquiry-toggle.tsx"), "utf8");
+for (const banned of ["value=", 'type="number"', "step="]) {
+  if (toggleSource.includes(banned)) {
+    throw new Error(`TK-013 selection control must not carry a numeric amount input: ${banned}`);
+  }
+}
+
 
 const catalogPage = readFileSync(resolve("src/app/catalog/page.tsx"), "utf8");
 
@@ -128,4 +160,4 @@ if (recordCount !== 20) {
   throw new Error(`Catalog must list the 20 owner-reviewed inventory records, found ${recordCount}`);
 }
 
-console.log("Catalog and TK-012 inquiry-form route guard passed");
+console.log("Catalog and TK-013 inquiry-list route guard passed");

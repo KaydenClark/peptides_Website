@@ -268,7 +268,9 @@ angles or duplicate an image merely to fill thumbnails.
 
 - Selecting a listing/variant creates temporary browser context only.
 - The state is called an `inquiry list` only if multiple entries are explicitly
-  approved later; otherwise use a singular selected-listing summary.
+  approved later; otherwise use a singular selected-listing summary. The owner
+  gave that approval on 2026-09-07, so the plural `inquiry list` is the
+  approved shape and is what ships (S-001 TK-013).
 - There are no prices, quantities, totals, discount logic, delivery estimates,
   or reservation timers.
 - Returning to the catalog preserves search/filter state and the current valid

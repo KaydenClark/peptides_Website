@@ -14,7 +14,7 @@ and proof live in the linked stable spec.
 <!-- hot-specs:start -->
 | Spec | Current slice | Owner | Blocker | Latest meaningful event | Next gate |
 |---|---|---|---|---|---|
-| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-005: Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. (blocked) | claude | Approved catalog content and verified public licensure claims | TK-011 closed with proof. | Complete TK-013. |
+| [S-001](workbench/specs/S-001-catalog-inquiry-boundary/SPEC.md) | TK-005: Add a minimized Supabase-backed demo inquiry capture after approved catalog content and verified public licensure claims exist. (blocked) | claude | Approved catalog content and verified public licensure claims | TK-013 closed with proof. | Separate-context review of `feat/tk-013-inquiry-list` before it merges to `integration`; the TK-005/TK-002/TK-003 path stays blocked. |
 <!-- hot-specs:end -->
 
 ## Owner Decisions
