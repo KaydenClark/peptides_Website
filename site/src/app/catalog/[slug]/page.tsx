@@ -4,10 +4,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { Icon } from "@/components/icon";
-import { InquiryForm } from "@/components/inquiry-form";
+import { InquiryToggle } from "@/components/inquiry-toggle";
 import { catalogRecords, getCatalogRecord } from "@/data/catalog";
-
-import { sendCatalogInquiry } from "./inquiry-action";
 
 export function generateStaticParams() {
   return catalogRecords.map((record) => ({ slug: record.slug }));
@@ -87,8 +85,12 @@ export default async function CatalogDetailPage(props: PageProps<"/catalog/[slug
             )}
           </section>
           <section className="research-notice research-notice--contact" aria-labelledby="inquiry-status-title">
-            <h2 id="inquiry-status-title"><span className="research-notice__badge"><Icon name="contact" /></span>Contact about this item</h2>
-            <InquiryForm action={sendCatalogInquiry.bind(null, record.id, record.displayName)} />
+            <h2 id="inquiry-status-title"><span className="research-notice__badge"><Icon name="contact" /></span>Ask the owner about this record</h2>
+            <p className="inquiry-form__hint">
+              Add this record to your inquiry list, then send one message about
+              everything you selected. Nothing is ordered, reserved, or charged.
+            </p>
+            <InquiryToggle recordName={record.displayName} slug={record.slug} />
           </section>
         </div>
       </div>

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+import { useInquiryList } from "@/components/inquiry-list-provider";
+
 const navigation = [
   { href: "/catalog", label: "Catalog" },
   { href: "/#how-it-works", label: "How it works" },
@@ -12,6 +14,10 @@ const navigation = [
 export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const { hydrated, slugs } = useInquiryList();
+  // The indicator stays out of the way until the visitor has actually chosen
+  // something, so catalog discovery remains the primary action.
+  const showIndicator = hydrated && slugs.length > 0;
   const [isOpen, setIsOpen] = useState(false);
   const openButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -92,6 +98,17 @@ export function SiteHeader() {
                 </Link>
               ))}
             </nav>
+            <div aria-live="polite" className="inquiry-indicator__slot">
+              {showIndicator ? (
+                <Link className="inquiry-indicator" href="/inquiry">
+                  Inquiry list
+                  <span className="inquiry-indicator__count">{slugs.length}</span>
+                  <span className="sr-only">
+                    {slugs.length === 1 ? "1 record selected" : `${slugs.length} records selected`}
+                  </span>
+                </Link>
+              ) : null}
+            </div>
             <button
               aria-controls="mobile-navigation"
               aria-expanded={isOpen}

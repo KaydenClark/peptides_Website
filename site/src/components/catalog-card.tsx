@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { InquiryToggle } from "@/components/inquiry-toggle";
 import type { CatalogRecord } from "@/data/catalog";
 
 export function CatalogCard({
@@ -29,6 +30,7 @@ export function CatalogCard({
           <span className="catalog-card__cta-label">View details</span>
           <span className="catalog-card__cta-arrow">&rarr;</span>
         </span>
+        <InquiryToggle recordName={item.displayName} slug={item.slug} variant="card" />
       </div>
     </article>
   );

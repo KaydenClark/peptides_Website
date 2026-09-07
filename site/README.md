@@ -1,10 +1,11 @@
 # Peptide Method
 
 Private Vercel-demo Next.js catalog for twenty owner-reviewed research-material records.
-Each catalog detail page has a single-item "Contact about this item" form
-(TK-012) that emails the owner through Resend; nothing is stored by the
-application. No database, acknowledgments, policy versions, or owner queue
-exist yet.
+Visitors add records to an inquiry list from the catalog cards or a record's
+detail page and send one combined message from `/inquiry` (TK-013), which
+emails the owner through Resend; nothing is stored by the application. The
+selection itself lives only in `sessionStorage` for that browser tab. No
+database, acknowledgments, policy versions, or owner queue exist yet.
 
 ## Run locally
 
